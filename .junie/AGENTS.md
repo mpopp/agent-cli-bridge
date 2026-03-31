@@ -3,6 +3,8 @@
 Auto-generated from all feature plans. Last updated: 2026-03-31
 
 ## Active Technologies
+- TypeScript 5.x, Node.js 22.x LTS + Electron, Express.js 5.x, better-sqlite3, get-port (or native net module) (002-embed-express-server)
+- SQLite (via better-sqlite3) (002-embed-express-server)
 
 - TypeScript 5.x (strict mode), Node.js 22.x LTS + Electron, electron-vite, React 19.x, Material UI (MUI), TanStack Router (001-project-bootstrap)
 
@@ -22,6 +24,7 @@ npm test && npm run lint
 TypeScript 5.x (strict mode), Node.js 22.x LTS: Follow standard conventions
 
 ## Recent Changes
+- 002-embed-express-server: Added TypeScript 5.x, Node.js 22.x LTS + Electron, Express.js 5.x, better-sqlite3, get-port (or native net module)
 
 - 001-project-bootstrap: Added TypeScript 5.x (strict mode), Node.js 22.x LTS + Electron, electron-vite, React 19.x, Material UI (MUI), TanStack Router
 
