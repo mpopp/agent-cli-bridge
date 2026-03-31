@@ -10,6 +10,7 @@ Sync Impact Report:
   ✅ .specify/templates/spec-template.md (reviewed, no changes needed)
 - Follow-up TODOs: None
 -->
+
 # agent-cli-bridge Constitution
 
 ## Core Principles
@@ -34,9 +35,9 @@ Security MUST be layered. No single mechanism may be the sole protection against
 - **Layer 2 — Directory scoping**: Agents may only operate in explicitly registered directories. Unregistered directories are blocked by default.
 - **Layer 3 — Per-directory rules**: Each registered directory has its own whitelist/blacklist with pattern matching (e.g., `git *` allowed, `rm *` denied).
 - **Layer 4 — Execution modes**: Per-directory mode selection:
-    - `strict` — only whitelisted commands execute; everything else is blocked.
-    - `supervised` — whitelisted commands execute; non-whitelisted commands trigger a user approval prompt in the UI.
-    - `brave` — whitelisted commands execute; non-whitelisted commands execute with a warning logged (for advanced users who accept the risk).
+  - `strict` — only whitelisted commands execute; everything else is blocked.
+  - `supervised` — whitelisted commands execute; non-whitelisted commands trigger a user approval prompt in the UI.
+  - `brave` — whitelisted commands execute; non-whitelisted commands execute with a warning logged (for advanced users who accept the risk).
 - **Layer 5 — Timeout and resource limits**: Configurable per-execution timeout (default: 30s) and output buffer limit (default: 10 MB) to prevent runaway processes.
 - The hardcoded blocklist (Layer 1) overrides ALL other layers. A command on the hardcoded blocklist is rejected even if it matches a user whitelist in brave mode.
 
@@ -73,9 +74,9 @@ All features MUST be developed test-first. The testing strategy reflects the ris
 - **E2E:** Playwright tests against the packaged Electron application to verify the full flow from UI interaction to command execution result.
 - **Test pyramid:** Unit > Integration > E2E (many unit tests, fewer integration tests, minimal E2E tests).
 - **Testing tools:**
-    - Unit & Integration: **Vitest**
-    - Component testing: **Vitest + React Testing Library**
-    - E2E: **Playwright** (with Electron support)
+  - Unit & Integration: **Vitest**
+  - Component testing: **Vitest + React Testing Library**
+  - E2E: **Playwright** (with Electron support)
 - Security-related tests MUST assert rejection without executing the actual command. No test may invoke a destructive operation against any real or emulated system resource.
 
 ### V. Simplicity and Incrementalism
@@ -102,11 +103,11 @@ The user MUST always understand what is happening on their machine and what has 
 The application follows a pragmatic layered architecture. This is NOT Clean Architecture, DDD, or CQRS — those patterns are explicitly rejected as overengineered for this project's domain complexity.
 
 - **Layer separation:**
-    - **Route/IPC handlers** — thin; responsible only for request parsing, input validation, and response formatting.
-    - **Service layer** — orchestrates business logic; calls into Security Engine, Executor, and Database repositories.
-    - **Security Engine** (`src/main/security/`) — pure business logic, MUST NOT import Express, Electron, SQLite, or any framework. Receives plain data, returns plain decisions. This isolation is non-negotiable for testability.
-    - **Executor** (`src/main/executor/`) — child process management, isolated from API concerns.
-    - **Database repositories** (`src/main/database/`) — thin data access layer over SQLite. No repository interfaces or abstract factories — direct better-sqlite3 usage is permitted.
+  - **Route/IPC handlers** — thin; responsible only for request parsing, input validation, and response formatting.
+  - **Service layer** — orchestrates business logic; calls into Security Engine, Executor, and Database repositories.
+  - **Security Engine** (`src/main/security/`) — pure business logic, MUST NOT import Express, Electron, SQLite, or any framework. Receives plain data, returns plain decisions. This isolation is non-negotiable for testability.
+  - **Executor** (`src/main/executor/`) — child process management, isolated from API concerns.
+  - **Database repositories** (`src/main/database/`) — thin data access layer over SQLite. No repository interfaces or abstract factories — direct better-sqlite3 usage is permitted.
 - **No speculative abstractions:** Do not create interfaces "in case we swap SQLite" or "in case we replace Express." Extract an interface only when a second implementation actually exists.
 - **No Use-Case classes:** Business operations are functions in service modules, not single-method classes.
 - **Dependency rule:** The Security Engine is the innermost layer and MUST have zero external dependencies. Everything else may pragmatically import its dependencies directly.
@@ -245,9 +246,9 @@ The following features are acknowledged but intentionally deferred. They MUST NO
 - All specs and plans MUST be validated against these principles. A spec that violates a principle MUST either be revised or the constitution MUST be amended first.
 - **Amendments** require: (1) a documented rationale, (2) impact analysis on existing features, (3) update to this file with version bump.
 - **Version policy:**
-    - MAJOR: Principle removed or fundamentally redefined
-    - MINOR: New principle or section added, material expansion
-    - PATCH: Clarifications, wording fixes, non-semantic refinements
+  - MAJOR: Principle removed or fundamentally redefined
+  - MINOR: New principle or section added, material expansion
+  - PATCH: Clarifications, wording fixes, non-semantic refinements
 - Security principles (I, II) may only be amended to become **more restrictive**, never less.
 
 **Version**: 2.1.0 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-03-31

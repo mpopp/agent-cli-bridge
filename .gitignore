@@ -230,3 +230,9 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains+all,node
+
+# Custom additions
+.vite/
+*.db
+playwright-report/
+test-results/
