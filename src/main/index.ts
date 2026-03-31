@@ -3,6 +3,8 @@ import { join } from 'path'
 import { logger } from './logger'
 import { getDb, closeDb } from './database/connection'
 import { runMigrations } from './database/migrate'
+import { initServerConfig } from './services/config.service'
+import { startServer, stopServer } from './api/server'
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -35,6 +37,8 @@ app.whenReady().then(async () => {
   try {
     getDb()
     await runMigrations()
+    const config = await initServerConfig()
+    await startServer(config)
   } catch (error) {
     logger.error({ error }, 'Failed to initialize database')
     app.quit()
@@ -54,7 +58,8 @@ app.on('window-all-closed', () => {
   }
 })
 
-app.on('quit', () => {
+app.on('quit', async () => {
+  await stopServer()
   closeDb()
   logger.info('Application exiting')
 })

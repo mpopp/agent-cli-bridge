@@ -1,0 +1,7 @@
+CREATE TABLE server_config (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    port INTEGER NOT NULL,
+    api_key TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);

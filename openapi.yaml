@@ -3,4 +3,38 @@ info:
   title: agent-cli-bridge API
   version: 1.0.0
   description: API for the agent-cli-bridge application
-paths: {}
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      description: Returns the health status of the embedded server and the system hostname.
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Server is healthy and running.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  hostname:
+                    type: string
+                    example: "user-desktop-123"
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized - API key is missing or invalid.
+        '404':
+          description: Endpoint not found.
+        '500':
+          description: Internal server error.
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

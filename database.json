@@ -1,0 +1,10 @@
+{
+  "dev": {
+    "driver": "sqlite3",
+    "filename": "agent-cli-bridge.db"
+  },
+  "sqlite": {
+    "driver": "sqlite3",
+    "filename": "agent-cli-bridge.db"
+  }
+}
