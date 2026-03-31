@@ -1,3 +1,15 @@
+<!--
+Sync Impact Report:
+- Version change: 2.0.1 -> 2.1.0
+- Modified principles: None (Updated Conventions section for db-migrate)
+- Added sections: None
+- Removed sections: None
+- Templates requiring updates:
+  ✅ .specify/templates/tasks-template.md (updated db-migrate reference)
+  ✅ .specify/templates/plan-template.md (reviewed, no changes needed)
+  ✅ .specify/templates/spec-template.md (reviewed, no changes needed)
+- Follow-up TODOs: None
+-->
 # agent-cli-bridge Constitution
 
 ## Core Principles
@@ -200,7 +212,7 @@ agent-cli-bridge/
 - **API development workflow:** OpenAPI spec first → implementation second → validation against spec
 - **Logging:** pino with JSON output; file transport to `app.getPath('userData')/logs/` in production, pretty-print to stdout in development
 - **Database location:** `app.getPath('userData')/agent-cli-bridge.db` — never in the project directory or temp folders
-- **Database migrations:** Sequential numbered migration files, run automatically on app startup
+- **Database migrations:** Sequential numbered migration files, run automatically on app startup. The tool db-migrate (https://db-migrate.readthedocs.io/en/latest) MUST be used. Database schema migrations via different mechanisms are not allowed!
 - **Internationalization:** All user-facing strings MUST use i18next translation keys. No hardcoded UI strings. English is the default and only language at launch; additional languages can be added by providing translation files without code changes.
 - **Versioning:** SemVer for the application. OpenAPI spec version MUST match the app version.
 - **Changelog:** `CHANGELOG.md` in Keep a Changelog format (https://keepachangelog.com/). Categories: Added, Changed, Deprecated, Removed, Fixed, Security. Every PR that changes user-facing behavior MUST include a changelog entry under `[Unreleased]`. The `[Unreleased]` section is promoted to a versioned section at release time.
@@ -238,4 +250,4 @@ The following features are acknowledged but intentionally deferred. They MUST NO
     - PATCH: Clarifications, wording fixes, non-semantic refinements
 - Security principles (I, II) may only be amended to become **more restrictive**, never less.
 
-**Version**: 2.0.1 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-03-31
+**Version**: 2.1.0 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-03-31
