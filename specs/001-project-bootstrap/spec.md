@@ -3,7 +3,77 @@
 **Feature Branch**: `001-project-bootstrap`  
 **Created**: 2026-03-31  
 **Status**: Draft  
-**Input**: User description: "replaced in followup commits"
+**Input**: User description: "Feature: Project Bootstrap & Application Shell
+
+Set up the foundational project structure for agent-cli-bridge from a completely empty repository.
+The result must be a working Electron application that starts, shows a minimal shell window,
+and has all tooling configured and verified.
+
+This is a walking skeleton — no business logic, no security engine, no REST API yet.
+The goal is a project every subsequent feature can build on.
+
+Scope:
+
+1. Package & Build Setup
+    - npm project initialized with package.json
+    - electron-vite configured for Main + Renderer + Preload
+    - TypeScript 5.x strict mode for all three contexts (separate tsconfigs)
+    - ESLint (flat config) + Prettier configured and passing
+    - npm scripts: dev, build, lint, format, test
+
+2. Electron Shell
+    - BrowserWindow with hardened security settings as per the constitution:
+      nodeIntegration: false, contextIsolation: true, sandbox: true
+    - Preload script with contextBridge.exposeInMainWorld exposing a minimal
+      placeholder API (e.g. versions object) to verify the bridge works
+    - App lifecycle: ready, window-all-closed, activate handled correctly
+    - No menu bar, frameless or default frame is fine for now
+
+3. React Renderer
+    - React 19 + MUI (Material UI) set up
+    - TanStack Router configured with a single root route
+    - i18next + react-i18next initialized with English as default locale,
+      translation file at src/renderer/i18n/locales/en/common.json
+    - A minimal Dashboard page that displays the app name and version
+      (version read via the preload bridge from process.versions)
+    - No real content, just enough to verify the full stack renders
+
+4. Logging
+    - pino configured in the Main process
+    - Development: pino-pretty output to stdout
+    - Production: JSON output (file transport deferred to later feature)
+    - Logger instance exported from src/main/logger.ts
+
+5. Database Foundation
+    - better-sqlite3 installed
+    - DB connection module at src/main/database/connection.ts
+    - Database file path resolved via app.getPath('userData')
+    - Migration runner: reads sequential migration files from src/main/database/migrations/
+    - First migration (001_initial.sql) creates a schema_migrations table only
+    - DB opens and migration runs on app startup, logged via pino
+
+6. Testing Infrastructure
+    - Vitest configured for unit and integration tests
+    - Playwright configured with Electron support for E2E tests
+    - One smoke test per layer:
+        - Unit: assert 1 + 1 === 2 (verifies Vitest works)
+        - E2E: app launches and window title contains "agent-cli-bridge" (verifies Playwright + Electron works)
+    - All tests pass in CI (npm test runs all suites)
+
+7. Project Hygiene
+    - .gitignore covers node_modules, dist, out, .vite, *.db, logs/
+    - .specify/ and .junie/ (or equivalent agent commands dir) committed
+    - README.md with: what the project is, prerequisites, npm dev, npm test, npm build
+    - openapi.yaml stub at repo root: OpenAPI 3.1, info block only, no paths yet
+    - CHANGELOG.md initialized with [Unreleased] section
+
+Out of scope for this feature:
+- REST API (Express server)
+- Security Engine and blocklist
+- Any real UI content beyond the shell
+- IPC handlers beyond the preload bridge placeholder
+- File logging transport for pino
+- Any database tables beyond schema_migrations"
 
 ## User Scenarios & Testing _(mandatory)_
 

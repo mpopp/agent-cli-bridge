@@ -1,0 +1,5 @@
+{
+  "app_name": "Agent CLI Bridge",
+  "welcome": "Welcome to Agent CLI Bridge",
+  "version": "Version: {{version}}"
+}

@@ -1,0 +1,6 @@
+openapi: 3.1.0
+info:
+  title: agent-cli-bridge API
+  version: 1.0.0
+  description: API for the agent-cli-bridge application
+paths: {}
