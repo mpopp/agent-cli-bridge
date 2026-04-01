@@ -23,8 +23,21 @@ curl -X POST http://127.0.0.1:<PORT>/exec \
 Expect a `403 Forbidden` response.
 
 ## Development & Testing
-Run unit tests for the validator and executor modules:
+Run the full test suite (unit + integration + e2e):
 ```bash
 npm test
 ```
-The executor tests ensure that malicious commands are not executed against the real filesystem by mocking the actual process execution.
+Run only linting:
+```bash
+npm run lint
+```
+
+The executor tests ensure that malicious commands are not executed against the real filesystem by mocking the actual process execution. Integration tests spin up the Express app in-process with a mocked database and use Node's native `fetch` to exercise the full request/response cycle.
+
+## Implementation Notes
+
+- **Security**: The `POST /exec` endpoint always runs the Security Engine blocklist check before spawning any process. Blocked commands return `403 Forbidden` immediately.
+- **Process termination**: The executor uses `detached: true` with `process.kill(-pid, 'SIGKILL')` to kill the entire process group on timeout or output-size exceeded, ensuring no runaway child processes survive.
+- **Execution limits**: Timeout (seconds) and max output size (MB) are read from the `exec_config` table (single row, id=1, defaults: 30s / 10MB).
+- **Envelope format**: All responses follow `{ data, error, meta }`. On success, `data` contains `{ exitCode, stdout, stderr }`. On error, `error` contains `{ code, message }`.
+- **Auth**: All requests require a valid `X-API-Key` header matching the value stored in `server_config`.

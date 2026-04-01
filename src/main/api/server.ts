@@ -5,6 +5,7 @@ import { errorHandler } from './middleware/errorHandler'
 import { notFoundHandler } from './middleware/notFoundHandler'
 import { authMiddleware } from './middleware/auth'
 import { healthHandler } from './routes/health'
+import { execHandler } from './routes/exec'
 import { join } from 'path'
 
 export const app = express()
@@ -23,6 +24,7 @@ app.get('/openapi.yaml', (req, res) => {
 
 // Protected Routes
 app.get('/health', authMiddleware, healthHandler)
+app.post('/exec', authMiddleware, execHandler)
 
 app.use(notFoundHandler)
 app.use(errorHandler)

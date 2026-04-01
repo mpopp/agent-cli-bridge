@@ -1,6 +1,25 @@
 import { getDb } from './connection'
 import { logger } from '../logger'
 
+export interface ExecConfig {
+  id: number
+  timeoutSeconds: number
+  maxOutputMb: number
+  createdAt: string
+  updatedAt: string
+}
+
+export const getExecConfig = (): ExecConfig | null => {
+  try {
+    const db = getDb()
+    const row = db.prepare('SELECT id, timeout_seconds as timeoutSeconds, max_output_mb as maxOutputMb, created_at as createdAt, updated_at as updatedAt FROM exec_config WHERE id = 1').get() as ExecConfig | undefined
+    return row || null
+  } catch (error) {
+    logger.error({ error }, 'Failed to read exec_config from database')
+    return null
+  }
+}
+
 export interface ServerConfig {
   id: number
   port: number

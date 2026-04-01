@@ -14,7 +14,7 @@ describe('Auth Middleware', () => {
     authMiddleware(req, res, next)
 
     expect(res.status).toHaveBeenCalledWith(401)
-    expect(res.json).toHaveBeenCalledWith({ error: 'Unauthorized' })
+    expect(res.json).toHaveBeenCalledWith({ data: null, error: { code: 'UNAUTHORIZED', message: 'Invalid API key' }, meta: {} })
     expect(next).not.toHaveBeenCalled()
   })
 
@@ -28,7 +28,7 @@ describe('Auth Middleware', () => {
     authMiddleware(req, res, next)
 
     expect(res.status).toHaveBeenCalledWith(401)
-    expect(res.json).toHaveBeenCalledWith({ error: 'Unauthorized' })
+    expect(res.json).toHaveBeenCalledWith({ data: null, error: { code: 'UNAUTHORIZED', message: 'Invalid API key' }, meta: {} })
     expect(next).not.toHaveBeenCalled()
   })
 

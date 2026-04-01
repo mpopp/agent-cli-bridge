@@ -32,7 +32,6 @@ npm test && npm run lint
 TypeScript 5.x (strict mode), Node.js 22.x LTS: Follow standard conventions
 
 ## Recent Changes
-- 005-exec-endpoint: Added TypeScript 5.x, Node.js 22.x LTS + Express.js 5.x, `child_process` (built-in)
 - 003-security-engine: Added TypeScript 5.x, Node.js 22.x LTS + None (pure TS, native Node.js built-in `RegExp` and `String.prototype.normalize`)
 - 003-security-engine: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 
