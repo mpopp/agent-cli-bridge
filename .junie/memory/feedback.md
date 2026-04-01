@@ -6,3 +6,11 @@
     "NEW INSTRUCTION": "WHEN user picks option and mentions fallback THEN implement primary and document fallback contingency"
 }
 
+[2026-04-01 14:11] - Updated by Junie
+{
+    "TYPE": "correction",
+    "CATEGORY": "migration usage",
+    "EXPECTATION": "Use the existing migrations in src/main/database/migrations/*.js for schema setup instead of inline db.exec in setup.ts.",
+    "NEW INSTRUCTION": "WHEN initializing or updating the database schema THEN run migrations from src/main/database/migrations and remove inline SQL from setup.ts"
+}
+

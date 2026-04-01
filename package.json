@@ -10,7 +10,7 @@
     "build": "electron-vite build",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest run && playwright test"
+    "test": "vitest run && electron-rebuild -f -w better-sqlite3 && playwright test; EXIT=$?; npm rebuild better-sqlite3; exit $EXIT"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

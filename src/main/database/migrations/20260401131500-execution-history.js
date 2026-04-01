@@ -1,8 +1,7 @@
-/**
- * @param {import('better-sqlite3').Database} db
- */
-exports.up = (db) => {
-  db.exec(`
+'use strict'
+
+exports.up = function (db) {
+  return db.runSql(`
     CREATE TABLE IF NOT EXISTS execution_log (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -18,9 +17,10 @@ exports.up = (db) => {
   `)
 }
 
-/**
- * @param {import('better-sqlite3').Database} db
- */
-exports.down = (db) => {
-  db.exec('DROP TABLE IF NOT EXISTS execution_log')
+exports.down = function (db) {
+  return db.runSql('DROP TABLE IF EXISTS execution_log')
+}
+
+exports._meta = {
+  version: 1
 }
