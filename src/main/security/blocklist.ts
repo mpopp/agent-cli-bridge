@@ -69,7 +69,14 @@ export const BLOCKLIST: ReadonlyArray<BlocklistEntry> = Object.freeze([
     severity: 'critical'
   },
   
-  // 10. Dangerous command + critical path combinations
+  // 10. Test pattern (for testing purposes only)
+  {
+    pattern: /^echo this is a blocked command$/i,
+    category: 'Test pattern',
+    severity: 'test'
+  },
+
+  // 11. Dangerous command + critical path combinations
   {
     pattern: /\b(?:mv|cp|echo|cat|shred)\s+.*(?:\/etc\/passwd|\/etc\/shadow|\/etc\/sudoers|\/root\/\.ssh|\/dev\/(?:mem|kmem|port|sda|hda|nvme))\b/i,
     category: 'Dangerous command + critical path combinations',

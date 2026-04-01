@@ -19,5 +19,5 @@ export interface SecurityCheck {
 export interface BlocklistEntry {
   pattern: RegExp;
   category: string;
-  severity: 'high' | 'critical';
+  severity: 'high' | 'critical' | 'test';
 }
