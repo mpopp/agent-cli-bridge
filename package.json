@@ -6,11 +6,12 @@
   "author": "Matthias",
   "license": "MIT",
   "scripts": {
-    "dev": "electron-vite dev",
-    "build": "electron-vite build",
+    "dev": "electron-rebuild -f -w better-sqlite3 && electron-vite dev",
+    "build": "electron-rebuild -f -w better-sqlite3 && electron-vite build",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest run && electron-rebuild -f -w better-sqlite3 && playwright test; EXIT=$?; npm rebuild better-sqlite3; exit $EXIT"
+    "test": "vitest run && electron-rebuild -f -w better-sqlite3 && playwright test; EXIT=$?; npm rebuild better-sqlite3; exit $EXIT",
+    "postinstall": "electron-rebuild -f -w better-sqlite3"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

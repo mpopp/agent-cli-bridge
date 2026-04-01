@@ -6,7 +6,9 @@ import { logger } from '../logger'
 export const runMigrations = async () => {
   logger.info('Running database migrations...')
 
-  const migrationsDir = join(__dirname, 'migrations')
+  const migrationsDir = __dirname.includes('out')
+    ? join(__dirname, 'database/migrations')
+    : join(__dirname, 'migrations')
 
   const dbmigrate = DBMigrate.getInstance(true, {
     config: {
