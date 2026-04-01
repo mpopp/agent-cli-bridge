@@ -2,7 +2,7 @@
 
 **Feature Branch**: `002-embed-express-server`  
 **Created**: 2026-03-31  
-**Status**: Draft  
+**Status**: Implemented
 **Input**: User description: Integrate an embedded HTTP Express server in the Electron main process. It has to start up when the app starts up and listen to 127.0.0.1. Port and API key have to be saved and loaded from the database. On the first start up there will be no API key and port stored in the database. In that case it has to fall back to a random UUID v4 as the API key and the first free port between the port 3000 and 5000. These values should then be stored in the database on the first start up. Subsequent start ups have to read from the database and use the values that are stored there. The only endpoint that we are adding right now is the GET /health endpoint which has to return a JSON with the status and the hostname when it succeeds. In case of failure the endpoint has to return a 401 status when no API key or an invalid API key is handed in. It has to return a 404 status if the endpoint is not available. It has to return a 400 status if the request is invalid and it has to return a 500 status in all other server error cases. The reference implementation for this endpoint can be found in the server.js file that makes up the rough prototype for the application that we are building but you should only take out the part from the /health endpoint right now for this feature. ../../_prototype/server.js
 
 ## Clarifications

@@ -2,7 +2,7 @@
 
 **Feature Branch**: `001-project-bootstrap`  
 **Created**: 2026-03-31  
-**Status**: Draft  
+**Status**: Implemented  
 **Input**: User description: "Feature: Project Bootstrap & Application Shell
 
 Set up the foundational project structure for agent-cli-bridge from a completely empty repository.
