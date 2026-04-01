@@ -69,6 +69,7 @@ The REST API is the primary integration surface for AI agent platforms (ChatGPT,
 
 All features MUST be developed test-first. The testing strategy reflects the risk profile of the application.
 
+- **ALL tests must pass:** Feature implementation is only done when ALL tests in the project pass. As long as tests are failing, you didn't finish your job.
 - **Backend (Main Process, API, Security):** Rigorous testing required. Unit test coverage target: ≥90% for security-critical modules (command validation, blocklist, directory scoping, permission engine). Integration tests for the full execution pipeline (request → validation → execution → response → audit log).
 - **Frontend (Renderer):** Test critical user paths. Coverage target: critical paths only (security settings UI, approval flow, command history display).
 - **E2E:** Playwright tests against the packaged Electron application to verify the full flow from UI interaction to command execution result.
