@@ -7,7 +7,7 @@ let dbInstance: ReturnType<typeof Database> | null = null
 
 export const getDbPath = () => join(app.getPath('userData'), 'agent-cli-bridge.db')
 
-export const getDb = () => {
+export const getDb = (): Database.Database => {
   if (!dbInstance) {
     const dbPath = getDbPath()
     logger.info({ dbPath }, 'Connecting to database')
