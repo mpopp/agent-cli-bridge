@@ -2,7 +2,8 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { createRouter, RouterProvider, createRoute, createRootRoute } from '@tanstack/react-router'
 import { App } from './App'
-import { Dashboard } from './pages/Dashboard'
+import { ExecutionHistory } from './pages/ExecutionHistory'
+import { About } from './pages/About'
 import './i18n/config'
 
 const rootRoute = createRootRoute({
@@ -12,10 +13,16 @@ const rootRoute = createRootRoute({
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
-  component: Dashboard
+  component: ExecutionHistory
 })
 
-const routeTree = rootRoute.addChildren([indexRoute])
+const aboutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/about',
+  component: About
+})
+
+const routeTree = rootRoute.addChildren([indexRoute, aboutRoute])
 
 const router = createRouter({ routeTree })
 

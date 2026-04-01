@@ -1,5 +1,33 @@
 {
   "app_name": "Agent CLI Bridge",
   "welcome": "Welcome to Agent CLI Bridge",
-  "version": "Version: {{version}}"
+  "version": "Version: {{version}}",
+  "history": {
+    "title": "Execution History",
+    "filter_all": "All",
+    "filter_executed": "Executed",
+    "filter_blocked": "Blocked",
+    "load_more": "Load More",
+    "clear_history": "Clear History",
+    "clear_confirm_title": "Clear Execution History?",
+    "clear_confirm_text": "Are you sure you want to delete all execution logs? This action cannot be undone.",
+    "clear_confirm_yes": "Clear",
+    "clear_confirm_no": "Cancel",
+    "empty_state": "No execution logs found.",
+    "col_status": "Status",
+    "col_command": "Command",
+    "col_time": "Time",
+    "col_duration": "Duration (ms)",
+    "col_exit_code": "Exit Code",
+    "status_executed": "Executed",
+    "status_blocked": "Blocked",
+    "status_running": "Running",
+    "detail_stdout": "Standard Output",
+    "detail_stderr": "Standard Error",
+    "detail_block_reason": "Block Reason"
+  },
+  "nav": {
+    "history": "Execution History",
+    "about": "About"
+  }
 }

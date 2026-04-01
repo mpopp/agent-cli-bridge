@@ -5,6 +5,8 @@ import { getDb, closeDb } from './database/connection'
 import { runMigrations } from './database/migrate'
 import { initServerConfig } from './services/config.service'
 import { startServer, stopServer } from './api/server'
+import { cleanupOldLogs } from './services/history.service'
+import { setupIpcHandlers } from './api/ipc'
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -39,6 +41,8 @@ app.whenReady().then(async () => {
     await runMigrations()
     const config = await initServerConfig()
     await startServer(config)
+    await cleanupOldLogs()
+    setupIpcHandlers()
   } catch (error) {
     logger.error({ error }, 'Failed to initialize database')
     app.quit()

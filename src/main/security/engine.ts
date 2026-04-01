@@ -1,6 +1,7 @@
 import { SecurityCheck, CommandContext, SecurityVerdict } from './types';
 import { splitAndExtractCommands } from './utils/split-commands';
 import { normalizeInput } from './utils/normalize';
+import { logExecution } from '../services/history.service';
 
 export class SecurityEngine {
   private checks: SecurityCheck[];
@@ -29,6 +30,16 @@ export class SecurityEngine {
     for (const check of this.checks) {
       const verdict = check.validate(context);
       if (!verdict.allowed) {
+        logExecution({
+          command,
+          cwd: process.cwd(), // We don't have the exact cwd here unless passed, fallback to process.cwd()
+          exitCode: null,
+          duration: null,
+          status: 'blocked',
+          blockReason: verdict.reason ?? 'Blocked by security policy',
+          stdoutPreview: null,
+          stderrPreview: null
+        });
         return verdict; // Stop on first block
       }
     }

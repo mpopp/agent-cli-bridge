@@ -1,5 +1,6 @@
 import { spawn } from 'child_process'
 import { AppError } from '../errors/AppError'
+import { logExecution } from '../services/history.service'
 
 export interface ExecuteOptions {
   cwd?: string
@@ -37,6 +38,7 @@ export const executeCommand = (command: string, options: ExecuteOptions): Promis
     let stderrBuf = ''
     let outputExceeded = false
     let timedOut = false
+    const startTime = Date.now()
 
     const timer = setTimeout(() => {
       timedOut = true
@@ -63,14 +65,46 @@ export const executeCommand = (command: string, options: ExecuteOptions): Promis
 
     child.on('close', (code) => {
       clearTimeout(timer)
+      const duration = Date.now() - startTime
 
       if (timedOut) {
+        logExecution({
+          command,
+          cwd: cwd ?? process.env.HOME ?? process.cwd(),
+          exitCode: null,
+          duration,
+          status: 'executed',
+          blockReason: null,
+          stdoutPreview: stdoutBuf,
+          stderrPreview: stderrBuf + '\n[TIMEOUT EXCEEDED]'
+        })
         return reject(new AppError(500, 'EXECUTION_TIMEOUT', 'Command execution exceeded the timeout limit.'))
       }
 
       if (outputExceeded) {
+        logExecution({
+          command,
+          cwd: cwd ?? process.env.HOME ?? process.cwd(),
+          exitCode: null,
+          duration,
+          status: 'executed',
+          blockReason: null,
+          stdoutPreview: stdoutBuf,
+          stderrPreview: stderrBuf + '\n[OUTPUT SIZE EXCEEDED]'
+        })
         return reject(new AppError(500, 'OUTPUT_SIZE_EXCEEDED', 'Command output exceeded the maximum allowed size.'))
       }
+
+      logExecution({
+        command,
+        cwd: cwd ?? process.env.HOME ?? process.cwd(),
+        exitCode: code ?? 1,
+        duration,
+        status: 'executed',
+        blockReason: null,
+        stdoutPreview: stdoutBuf,
+        stderrPreview: stderrBuf
+      })
 
       resolve({
         exitCode: code ?? 1,
@@ -81,6 +115,17 @@ export const executeCommand = (command: string, options: ExecuteOptions): Promis
 
     child.on('error', (err) => {
       clearTimeout(timer)
+      const duration = Date.now() - startTime
+      logExecution({
+        command,
+        cwd: cwd ?? process.env.HOME ?? process.cwd(),
+        exitCode: null,
+        duration,
+        status: 'executed',
+        blockReason: null,
+        stdoutPreview: stdoutBuf,
+        stderrPreview: stderrBuf + '\n[ERROR: ' + err.message + ']'
+      })
       reject(new AppError(500, 'EXECUTION_ERROR', `Failed to start process: ${err.message}`))
     })
   })
