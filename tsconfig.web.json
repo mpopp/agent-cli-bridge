@@ -8,5 +8,5 @@
     "moduleResolution": "bundler",
     "types": ["vite/client"]
   },
-  "include": ["src/renderer/**/*", "src/shared/**/*", "src/preload/**/*.d.ts"]
+  "include": ["src/renderer/**/*", "src/shared/**/*", "src/preload/**/*.d.ts", "src/types/**/*"]
 }

@@ -1,5 +1,5 @@
 import { ipcMain } from 'electron'
-import { getLogs, clearLogs } from '../services/history.service'
+import { getLogs, clearLogs } from '../services/history-service'
 import { ExecutionFilter } from '../../types/ipc'
 
 export function setupIpcHandlers() {

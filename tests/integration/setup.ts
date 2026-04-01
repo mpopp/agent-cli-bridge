@@ -1,16 +1,17 @@
-import { vi } from 'vitest'
+import { vi, beforeAll } from 'vitest'
+import { tmpdir } from 'os'
+import { join } from 'path'
+import { mkdirSync } from 'fs'
 
-
-vi.mock('../src/main/services/history-service', () => ({
-  logExecution: vi.fn(),
-  getLogs: vi.fn().mockResolvedValue([]),
-  clearLogs: vi.fn().mockResolvedValue(true),
-  cleanupOldLogs: vi.fn().mockResolvedValue(undefined)
-}))
+const workerId = process.env.VITEST_WORKER_ID ?? '0'
+const workerTmpDir = join(tmpdir(), `agent-cli-bridge-test-worker-${workerId}`)
 
 vi.mock('electron', () => ({
   app: {
-    getPath: vi.fn().mockReturnValue('/tmp'),
+    getPath: (_name: string) => {
+      if (_name === 'userData') return workerTmpDir
+      return workerTmpDir
+    },
     getVersion: () => '1.0.0',
     getName: () => 'agent-cli-bridge-test',
     quit: vi.fn(),
@@ -39,3 +40,8 @@ vi.mock('electron', () => ({
   }))
 }))
 
+beforeAll(async () => {
+  mkdirSync(workerTmpDir, { recursive: true })
+  const { runMigrations } = await import('../../src/main/database/migrate')
+  await runMigrations()
+})

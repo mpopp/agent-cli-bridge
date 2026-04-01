@@ -14,3 +14,11 @@
     "NEW INSTRUCTION": "WHEN initializing or updating the database schema THEN run migrations from src/main/database/migrations and remove inline SQL from setup.ts"
 }
 
+[2026-04-01 14:16] - Updated by Junie
+{
+    "TYPE": "preference",
+    "CATEGORY": "testing strategy",
+    "EXPECTATION": "Unit tests should not use a database or run migrations; only minimal setup per test type.",
+    "NEW INSTRUCTION": "WHEN configuring test environments by type THEN skip DB for unit; run migrations for integration and e2e"
+}
+

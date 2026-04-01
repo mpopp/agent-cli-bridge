@@ -1,6 +1,6 @@
 import { spawn } from 'child_process'
 import { AppError } from '../errors/AppError'
-import { logExecution } from '../services/history.service'
+import { logExecution } from '../services/history-service'
 
 export interface ExecuteOptions {
   cwd?: string

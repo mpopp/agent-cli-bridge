@@ -1,7 +1,7 @@
 import { SecurityCheck, CommandContext, SecurityVerdict } from './types';
 import { splitAndExtractCommands } from './utils/split-commands';
 import { normalizeInput } from './utils/normalize';
-import { logExecution } from '../services/history.service';
+import { logExecution } from '../services/history-service';
 
 export class SecurityEngine {
   private checks: SecurityCheck[];
