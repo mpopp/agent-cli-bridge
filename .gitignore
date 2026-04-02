@@ -236,3 +236,4 @@ dist
 *.db
 playwright-report/
 test-results/
+.junie/memory/language.json
