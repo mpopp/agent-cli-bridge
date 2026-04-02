@@ -7,7 +7,7 @@ import {hostname} from 'os';
 const app = express();
 app.use(express.json());
 
-// Einfache API-Key-Auth
+// Simple API-Key-Auth
 const API_KEY = process.env.CLI_PROXY_API_KEY || crypto.randomUUID();
 console.log(`🔑 API Key: ${API_KEY}`);
 
@@ -17,7 +17,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Hauptendpunkt: Befehl ausführen
+// Main endpoint: execute command
 app.post('/exec', (req, res) => {
   const { command, cwd, timeout } = req.body;
 
