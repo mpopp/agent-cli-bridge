@@ -10,7 +10,7 @@
     "build": "electron-rebuild -f -w better-sqlite3 && electron-vite build",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest run && electron-rebuild -f -w better-sqlite3 && playwright test; EXIT=$?; npm rebuild better-sqlite3; exit $EXIT",
+    "test": "vitest run && electron-rebuild -f -w better-sqlite3 && electron-vite build && playwright test; EXIT=$?; npm rebuild better-sqlite3; exit $EXIT",
     "postinstall": "electron-rebuild -f -w better-sqlite3"
   },
   "dependencies": {
