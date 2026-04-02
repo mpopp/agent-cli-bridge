@@ -14,7 +14,6 @@ export function About() {
           {t('welcome')}
         </Typography>
         <Typography variant="body2" sx={{ mt: 2 }}>
-          {/* @ts-expect-error - The api might not be perfectly typed if app version is injected */}
           {t('version', { version: window.api?.versions?.app || '1.0.0' })}
         </Typography>
         

@@ -1,6 +1,6 @@
 import { Chip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ExecutionLogEntry } from '../../../types/ipc';
+import { ExecutionLogEntry } from '../../types/ipc';
 
 interface StatusChipProps {
   status: ExecutionLogEntry['status'];
@@ -10,7 +10,7 @@ export function StatusChip({ status }: StatusChipProps) {
   const { t } = useTranslation();
   
   let color: 'success' | 'error' | 'warning' | 'default' = 'default';
-  let label = status;
+  let label: string = status;
 
   switch (status) {
     case 'executed':

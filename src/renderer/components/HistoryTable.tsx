@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { ExecutionLogEntry } from '../../../types/ipc';
+import { ExecutionLogEntry } from '../../types/ipc';
 import { StatusChip } from './StatusChip';
 
 interface HistoryTableProps {
