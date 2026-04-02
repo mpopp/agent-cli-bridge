@@ -1,11 +1,12 @@
 <!--
 Sync Impact Report:
-- Version change: 2.0.1 -> 2.1.0
-- Modified principles: None (Updated Conventions section for db-migrate)
-- Added sections: None
+- Version change: 2.1.0 -> 2.2.0
+- Modified principles: IV (added Definition of Done rule)
+- Modified conventions: Changelog (aligned with DoD)
+- Added sections: Definition of Done in Principle IV
 - Removed sections: None
 - Templates requiring updates:
-  ✅ .specify/templates/tasks-template.md (updated db-migrate reference)
+  ✅ .specify/templates/tasks-template.md (added mandatory DoD completion phase)
   ✅ .specify/templates/plan-template.md (reviewed, no changes needed)
   ✅ .specify/templates/spec-template.md (reviewed, no changes needed)
 - Follow-up TODOs: None
@@ -70,14 +71,20 @@ The REST API is the primary integration surface for AI agent platforms (ChatGPT,
 All features MUST be developed test-first. The testing strategy reflects the risk profile of the application.
 
 - **ALL tests must pass:** Feature implementation is only done when ALL tests in the project pass. As long as tests are failing, you didn't finish your job.
+- **Definition of Done (NON-NEGOTIABLE):** A feature is ONLY considered complete when ALL three of the following are true:
+  1. **All tests are green** — `npm run test:unit` (unit + integration via Vitest) and `npm run test:e2e` (E2E via Playwright) pass with zero failures. Running `npm test` executes both.
+  2. **CHANGELOG updated** — `CHANGELOG.md` has an entry for this feature under `[Unreleased]` using the appropriate category (Added / Changed / Fixed / etc.).
+  3. **Version bumped** — `package.json` version is incremented according to SemVer: PATCH for fixes, MINOR for new features, MAJOR for breaking changes.
+  These three steps MUST appear as explicit tasks in every feature's `tasks.md` and MUST be the last tasks completed.
 - **Backend (Main Process, API, Security):** Rigorous testing required. Unit test coverage target: ≥90% for security-critical modules (command validation, blocklist, directory scoping, permission engine). Integration tests for the full execution pipeline (request → validation → execution → response → audit log).
 - **Frontend (Renderer):** Test critical user paths. Coverage target: critical paths only (security settings UI, approval flow, command history display).
 - **E2E:** Playwright tests against the packaged Electron application to verify the full flow from UI interaction to command execution result.
 - **Test pyramid:** Unit > Integration > E2E (many unit tests, fewer integration tests, minimal E2E tests).
-- **Testing tools:**
-  - Unit & Integration: **Vitest**
-  - Component testing: **Vitest + React Testing Library**
-  - E2E: **Playwright** (with Electron support)
+- **Testing tools and scripts:**
+  - Unit & Integration: **Vitest** — `npm run test:unit` (runs vitest inside Electron's Node via `ELECTRON_RUN_AS_NODE=1` to ensure native module compatibility)
+  - E2E: **Playwright** (with Electron support) — `npm run test:e2e`
+  - All tests: `npm test` (runs `test:unit` then `test:e2e`)
+- **Native module compatibility:** `better-sqlite3` is compiled for Electron's Node version via `electron-rebuild` (runs in `postinstall`). To avoid ABI mismatch, `test:unit` executes vitest through Electron's Node binary (`ELECTRON_RUN_AS_NODE=1`), not the system Node. This ensures native modules are always compatible without lazy-loading hacks or conditional rebuilds.
 - Security-related tests MUST assert rejection without executing the actual command. No test may invoke a destructive operation against any real or emulated system resource.
 
 ### V. Simplicity and Incrementalism
@@ -134,7 +141,6 @@ The application follows a pragmatic layered architecture. This is NOT Clean Arch
 | Logging                  | pino                           | JSON-native structured logging                          |
 | Package manager          | npm                            | Lockfile committed                                      |
 | Unit/Integration testing | Vitest                         | —                                                       |
-| Component testing        | Vitest + React Testing Library | —                                                       |
 | E2E testing              | Playwright                     | With Electron support                                   |
 | Linting                  | ESLint                         | Flat config                                             |
 | Formatting               | Prettier                       | —                                                       |
@@ -217,7 +223,7 @@ agent-cli-bridge/
 - **Database migrations:** Sequential numbered migration files, run automatically on app startup. The tool db-migrate (https://db-migrate.readthedocs.io/en/latest) MUST be used. Database schema migrations via different mechanisms are not allowed!
 - **Internationalization:** All user-facing strings MUST use i18next translation keys. No hardcoded UI strings. English is the default and only language at launch; additional languages can be added by providing translation files without code changes.
 - **Versioning:** SemVer for the application.
-- **Changelog:** `CHANGELOG.md` in Keep a Changelog format (https://keepachangelog.com/). Categories: Added, Changed, Deprecated, Removed, Fixed, Security. Every PR that changes user-facing behavior MUST include a changelog entry under `[Unreleased]`. The `[Unreleased]` section is promoted to a versioned section at release time.
+- **Changelog:** `CHANGELOG.md` in Keep a Changelog format (https://keepachangelog.com/). Categories: Added, Changed, Deprecated, Removed, Fixed, Security. Every feature MUST include a changelog entry under `[Unreleased]` — this is part of the Definition of Done (see Principle IV). The `[Unreleased]` section is promoted to a versioned section at release time.
 - **Commit messages:** Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `refactor:`, `chore:`)
 - **Branching:** Feature branches off `main`, squash merge via PR
 
@@ -252,4 +258,4 @@ The following features are acknowledged but intentionally deferred. They MUST NO
   - PATCH: Clarifications, wording fixes, non-semantic refinements
 - Security principles (I, II) may only be amended to become **more restrictive**, never less.
 
-**Version**: 2.1.0 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-03-31
+**Version**: 2.2.0 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-04-02

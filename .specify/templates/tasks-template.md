@@ -158,6 +158,16 @@ Examples of foundational tasks (adjust based on your project):
 
 ---
 
+## Phase N+1: Feature Completion (Definition of Done) ⚠️ MANDATORY
+
+**Purpose**: These three tasks are NON-NEGOTIABLE. The feature is not done until all three are complete.
+
+- [ ] TXXX Ensure all tests are green — run `npm run test:unit` (unit + integration) and `npm run test:e2e` (E2E); ALL must pass with zero failures (or simply `npm test` to run both)
+- [ ] TXXX Update `CHANGELOG.md` — add an entry for this feature under `[Unreleased]` using the correct category (Added / Changed / Fixed / Security / etc.)
+- [ ] TXXX Bump version in `package.json` — PATCH for bug fixes, MINOR for new features, MAJOR for breaking changes (SemVer)
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
@@ -167,7 +177,8 @@ Examples of foundational tasks (adjust based on your project):
 - **User Stories (Phase 3+)**: All depend on Foundational phase completion
   - User stories can then proceed in parallel (if staffed)
   - Or sequentially in priority order (P1 → P2 → P3)
-- **Polish (Final Phase)**: Depends on all desired user stories being complete
+- **Polish (Phase N)**: Depends on all desired user stories being complete
+- **Feature Completion / Definition of Done (Phase N+1)**: ALWAYS the last phase — tests green + CHANGELOG updated + version bumped. No exceptions.
 
 ### User Story Dependencies
 
