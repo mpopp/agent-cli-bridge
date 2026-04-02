@@ -216,7 +216,7 @@ agent-cli-bridge/
 - **Database location:** `app.getPath('userData')/agent-cli-bridge.db` — never in the project directory or temp folders
 - **Database migrations:** Sequential numbered migration files, run automatically on app startup. The tool db-migrate (https://db-migrate.readthedocs.io/en/latest) MUST be used. Database schema migrations via different mechanisms are not allowed!
 - **Internationalization:** All user-facing strings MUST use i18next translation keys. No hardcoded UI strings. English is the default and only language at launch; additional languages can be added by providing translation files without code changes.
-- **Versioning:** SemVer for the application. OpenAPI spec version MUST match the app version.
+- **Versioning:** SemVer for the application.
 - **Changelog:** `CHANGELOG.md` in Keep a Changelog format (https://keepachangelog.com/). Categories: Added, Changed, Deprecated, Removed, Fixed, Security. Every PR that changes user-facing behavior MUST include a changelog entry under `[Unreleased]`. The `[Unreleased]` section is promoted to a versioned section at release time.
 - **Commit messages:** Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `refactor:`, `chore:`)
 - **Branching:** Feature branches off `main`, squash merge via PR
