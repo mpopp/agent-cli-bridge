@@ -10,7 +10,9 @@
     "build": "electron-rebuild -f -w better-sqlite3 && electron-vite build",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest run && electron-rebuild -f -w better-sqlite3 && electron-vite build && playwright test; EXIT=$?; npm rebuild better-sqlite3; exit $EXIT",
+    "test:unit": "ELECTRON_RUN_AS_NODE=1 ./node_modules/.bin/electron ./node_modules/vitest/vitest.mjs run",
+    "test:e2e": "electron-rebuild -f -w better-sqlite3 && electron-vite build && playwright test",
+    "test": "npm run test:unit && npm run test:e2e",
     "postinstall": "electron-rebuild -f -w better-sqlite3"
   },
   "dependencies": {
