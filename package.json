@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Agent CLI Bridge",
   "main": "./out/main/index.js",
-  "author": "Matthias",
+  "author": "Matthias Popp",
   "license": "MIT",
   "scripts": {
     "dev": "electron-rebuild -f -w better-sqlite3 && electron-vite dev",
