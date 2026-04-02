@@ -108,7 +108,7 @@ The application follows a pragmatic layered architecture. This is NOT Clean Arch
   - **Service layer** — orchestrates business logic; calls into Security Engine, Executor, and Database repositories.
   - **Security Engine** (`src/main/security/`) — pure business logic, MUST NOT import Express, Electron, SQLite, or any framework. Receives plain data, returns plain decisions. This isolation is non-negotiable for testability.
   - **Executor** (`src/main/executor/`) — child process management, isolated from API concerns.
-  - **Database repositories** (`src/main/database/`) — thin data access layer over SQLite. No repository interfaces or abstract factories — direct better-sqlite3 usage is permitted.
+  - **Database repositories** (`src/main/database/`) — thin data access layer over SQLite. No repository interfaces or abstract factories — direct better-sqlite3 usage is permitted. This is the only place where SQL is allowed!
 - **No speculative abstractions:** Do not create interfaces "in case we swap SQLite" or "in case we replace Express." Extract an interface only when a second implementation actually exists.
 - **No Use-Case classes:** Business operations are functions in service modules, not single-method classes.
 - **Dependency rule:** The Security Engine is the innermost layer and MUST have zero external dependencies. Everything else may pragmatically import its dependencies directly.

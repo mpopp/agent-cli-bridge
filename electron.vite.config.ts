@@ -15,8 +15,8 @@ export default defineConfig({
               const path = await import('path')
               const src = path.resolve(__dirname, 'src/main/database/migrations')
               const dest = path.resolve(__dirname, 'out/main/database/migrations')
-              
-              const copyDir = async (src, dest) => {
+
+              const copyDir = async (src: string, dest: string) => {
                 await fs.mkdir(dest, { recursive: true })
                 const entries = await fs.readdir(src, { withFileTypes: true })
                 for (const entry of entries) {
