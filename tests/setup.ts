@@ -1,6 +1,5 @@
 import { vi } from 'vitest'
 
-
 vi.mock('../src/main/services/history-service', () => ({
   logExecution: vi.fn(),
   getLogs: vi.fn().mockResolvedValue([]),
@@ -8,34 +7,7 @@ vi.mock('../src/main/services/history-service', () => ({
   cleanupOldLogs: vi.fn().mockResolvedValue(undefined)
 }))
 
-vi.mock('electron', () => ({
-  app: {
-    getPath: vi.fn().mockReturnValue('/tmp'),
-    getVersion: () => '1.0.0',
-    getName: () => 'agent-cli-bridge-test',
-    quit: vi.fn(),
-    on: vi.fn(),
-    whenReady: vi.fn().mockResolvedValue(undefined)
-  },
-  ipcMain: {
-    handle: vi.fn(),
-    on: vi.fn(),
-    removeHandler: vi.fn()
-  },
-  ipcRenderer: {
-    invoke: vi.fn(),
-    on: vi.fn(),
-    removeListener: vi.fn()
-  },
-  contextBridge: {
-    exposeInMainWorld: vi.fn()
-  },
-  BrowserWindow: vi.fn().mockImplementation(() => ({
-    loadURL: vi.fn(),
-    loadFile: vi.fn(),
-    show: vi.fn(),
-    on: vi.fn(),
-    getAllWindows: vi.fn().mockReturnValue([])
-  }))
-}))
-
+vi.mock('electron', async () => {
+  const { createElectronMock } = await import('./helpers/electron-mock')
+  return createElectronMock()
+})
