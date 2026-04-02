@@ -22,6 +22,7 @@ export const getExecConfig = (): ExecConfig | null => {
 
 export interface ServerConfig {
   id: number
+  address: string
   port: number
   apiKey: string
   createdAt: string
@@ -31,7 +32,7 @@ export interface ServerConfig {
 export const getServerConfig = (): ServerConfig | null => {
   try {
     const db = getDb()
-    const row = db.prepare('SELECT id, port, api_key as apiKey, created_at as createdAt, updated_at as updatedAt FROM server_config WHERE id = 1').get() as ServerConfig | undefined
+    const row = db.prepare('SELECT id, address, port, api_key as apiKey, created_at as createdAt, updated_at as updatedAt FROM server_config WHERE id = 1').get() as ServerConfig | undefined
     return row || null
   } catch (error) {
     logger.error({ error }, 'Failed to read server_config from database')
@@ -39,20 +40,21 @@ export const getServerConfig = (): ServerConfig | null => {
   }
 }
 
-export const upsertServerConfig = (port: number, apiKey: string): void => {
+export const upsertServerConfig = (address: string, port: number, apiKey: string): void => {
   try {
     const db = getDb()
     const stmt = db.prepare(`
-      INSERT INTO server_config (id, port, api_key) 
-      VALUES (1, ?, ?)
+      INSERT INTO server_config (id, address, port, api_key) 
+      VALUES (1, ?, ?, ?)
       ON CONFLICT(id) DO UPDATE SET 
+        address = excluded.address,
         port = excluded.port,
         api_key = excluded.api_key,
         updated_at = CURRENT_TIMESTAMP
     `)
-    stmt.run(port, apiKey)
+    stmt.run(address, port, apiKey)
   } catch (error) {
-    logger.error({ error, port, apiKey }, 'Failed to upsert server_config to database')
+    logger.error({ error, address, port, apiKey }, 'Failed to upsert server_config to database')
     throw error
   }
 }

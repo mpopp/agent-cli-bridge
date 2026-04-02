@@ -34,8 +34,8 @@ let serverInstance: ReturnType<typeof app.listen> | null = null
 export const startServer = (config: AppServerConfig): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
-      serverInstance = app.listen(config.port, '127.0.0.1', () => {
-        logger.info({ port: config.port }, 'Express server listening on 127.0.0.1')
+      serverInstance = app.listen(config.port, config.address, () => {
+        logger.info({ port: config.port, address: config.address }, `Express server listening on ${config.address}`)
         resolve()
       })
       serverInstance.on('error', (err) => {
@@ -46,6 +46,13 @@ export const startServer = (config: AppServerConfig): Promise<void> => {
       reject(err)
     }
   })
+}
+
+export const getServerStatus = (): 'running' | 'stopped' | 'error' => {
+  if (serverInstance) {
+    return 'running'
+  }
+  return 'stopped'
 }
 
 export const stopServer = (): Promise<void> => {

@@ -16,3 +16,18 @@ export interface ExecutionFilter {
   offset?: number;
   status?: 'all' | 'executed' | 'blocked';
 }
+
+export interface ServerConfig {
+  address: string;
+  port: number;
+  apiKey: string;
+}
+
+export interface NetworkConfig {
+  address: string;
+  port: number;
+}
+
+export interface ServerStatus {
+  status: 'running' | 'stopped' | 'error';
+}

@@ -16,7 +16,7 @@ describe('Config Service', () => {
   })
 
   it('should return existing config if available and port is free', async () => {
-    const mockConfig = { id: 1, port: 4000, apiKey: 'test-key', createdAt: '', updatedAt: '' }
+    const mockConfig = { id: 1, address: '127.0.0.1', port: 4000, apiKey: 'test-key', createdAt: '', updatedAt: '' }
     vi.spyOn(dbConfig, 'getServerConfig').mockReturnValue(mockConfig)
     
     // Mock net.createServer to succeed (port is free)
@@ -28,7 +28,7 @@ describe('Config Service', () => {
     vi.spyOn(net, 'createServer').mockReturnValue(serverMock as unknown as any)
 
     const result = await initServerConfig()
-    expect(result).toEqual({ port: 4000, apiKey: 'test-key' })
+    expect(result).toEqual({ address: '127.0.0.1', port: 4000, apiKey: 'test-key' })
     expect(dbConfig.getServerConfig).toHaveBeenCalled()
     expect(dbConfig.upsertServerConfig).not.toHaveBeenCalled()
   })
@@ -47,7 +47,7 @@ describe('Config Service', () => {
     vi.spyOn(crypto, 'randomUUID').mockReturnValue('new-and-valid-uuid-v4')
 
     const result = await initServerConfig()
-    expect(result).toEqual({ port: 3000, apiKey: 'new-and-valid-uuid-v4' })
-    expect(dbConfig.upsertServerConfig).toHaveBeenCalledWith(3000, 'new-and-valid-uuid-v4')
+    expect(result).toEqual({ address: '127.0.0.1', port: 3000, apiKey: 'new-and-valid-uuid-v4' })
+    expect(dbConfig.upsertServerConfig).toHaveBeenCalledWith('127.0.0.1', 3000, 'new-and-valid-uuid-v4')
   })
 })

@@ -1,4 +1,4 @@
-import type { ExecutionFilter, ExecutionLogEntry } from '../types/ipc'
+import type { ExecutionFilter, ExecutionLogEntry, ServerConfig, NetworkConfig, ServerStatus } from '../types/ipc'
 
 export interface IElectronAPI {
   versions: {
@@ -10,6 +10,12 @@ export interface IElectronAPI {
   executionHistory: {
     getLogs: (filter: ExecutionFilter) => Promise<ExecutionLogEntry[]>
     clearLogs: () => Promise<boolean>
+  }
+  connectionConfig: {
+    getConfig: () => Promise<ServerConfig>
+    saveNetworkConfig: (config: NetworkConfig) => Promise<boolean>
+    regenerateApiKey: () => Promise<string>
+    getServerStatus: () => Promise<ServerStatus>
   }
 }
 

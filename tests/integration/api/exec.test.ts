@@ -7,7 +7,7 @@ vi.mock('../../../src/main/database/config')
 
 const TEST_API_KEY = 'integration-test-key'
 
-const mockServerConfig = { id: 1, port: 0, apiKey: TEST_API_KEY, createdAt: '', updatedAt: '' }
+const mockServerConfig = { id: 1, address:'127.0.0.1', port: 0, apiKey: TEST_API_KEY, createdAt: '', updatedAt: '' }
 const mockExecConfig = { id: 1, timeoutSeconds: 10, maxOutputMb: 10, createdAt: '', updatedAt: '' }
 
 let server: http.Server

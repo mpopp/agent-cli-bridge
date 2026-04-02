@@ -4,6 +4,7 @@ import { getServerConfig, upsertServerConfig } from '../database/config'
 import { logger } from '../logger'
 
 export interface AppServerConfig {
+  address: string
   port: number
   apiKey: string
 }
@@ -47,11 +48,13 @@ const findFreePort = async (): Promise<number> => {
 export const initServerConfig = async (): Promise<AppServerConfig> => {
   const existingConfig = getServerConfig()
   
+  let address: string = '127.0.0.1'
   let port: number
   let apiKey: string
   let needsUpdate = false
 
   if (existingConfig) {
+    address = existingConfig.address || '127.0.0.1'
     apiKey = existingConfig.apiKey
     const isFree = await checkPortFree(existingConfig.port)
     if (isFree) {
@@ -69,8 +72,37 @@ export const initServerConfig = async (): Promise<AppServerConfig> => {
   }
 
   if (needsUpdate) {
-    upsertServerConfig(port, apiKey)
+    upsertServerConfig(address, port, apiKey)
   }
 
-  return { port, apiKey }
+  return { address, port, apiKey }
+}
+
+export const getConfig = (): AppServerConfig => {
+  const existingConfig = getServerConfig()
+  if (existingConfig) {
+    return {
+      address: existingConfig.address || '127.0.0.1',
+      port: existingConfig.port,
+      apiKey: existingConfig.apiKey,
+    }
+  }
+  throw new Error('Server config not initialized')
+}
+
+export const saveNetworkConfig = async (address: string, port: number): Promise<boolean> => {
+  const config = getConfig()
+  const isFree = await checkPortFree(port)
+  if (!isFree && port !== config.port) {
+    throw new Error('Port is already in use')
+  }
+  upsertServerConfig(address, port, config.apiKey)
+  return true
+}
+
+export const regenerateApiKey = (): string => {
+  const config = getConfig()
+  const newApiKey = crypto.randomUUID()
+  upsertServerConfig(config.address, config.port, newApiKey)
+  return newApiKey
 }

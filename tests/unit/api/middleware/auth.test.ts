@@ -19,7 +19,7 @@ describe('Auth Middleware', () => {
   })
 
   it('should return 401 if x-api-key is invalid', () => {
-    vi.spyOn(configDb, 'getServerConfig').mockReturnValue({ id: 1, port: 3000, apiKey: 'valid-key', createdAt: '', updatedAt: '' })
+    vi.spyOn(configDb, 'getServerConfig').mockReturnValue({ id: 1, address:'127.0.0.1', port: 3000, apiKey: 'valid-key', createdAt: '', updatedAt: '' })
     
     const req = { headers: { 'x-api-key': 'invalid-key' } } as unknown as any
     const res = { status: vi.fn().mockReturnThis(), json: vi.fn() } as unknown as any
@@ -33,7 +33,7 @@ describe('Auth Middleware', () => {
   })
 
   it('should call next if x-api-key is valid', () => {
-    vi.spyOn(configDb, 'getServerConfig').mockReturnValue({ id: 1, port: 3000, apiKey: 'valid-key', createdAt: '', updatedAt: '' })
+    vi.spyOn(configDb, 'getServerConfig').mockReturnValue({ id: 1, address:'127.0.0.1', port: 3000, apiKey: 'valid-key', createdAt: '', updatedAt: '' })
     
     const req = { headers: { 'x-api-key': 'valid-key' } } as unknown as any
     const res = { status: vi.fn().mockReturnThis(), json: vi.fn() } as unknown as any

@@ -1,5 +1,5 @@
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Divider } from '@mui/material';
-import { History, Info } from '@mui/icons-material';
+import { History, Info, Settings } from '@mui/icons-material';
 import { Link, useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
@@ -27,6 +27,14 @@ export function Sidebar() {
                 <History />
               </ListItemIcon>
               <ListItemText primary={t('nav.history')} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/connection" selected={location.pathname === '/connection'}>
+              <ListItemIcon>
+                <Settings />
+              </ListItemIcon>
+              <ListItemText primary={t('nav.connection')} />
             </ListItemButton>
           </ListItem>
         </List>

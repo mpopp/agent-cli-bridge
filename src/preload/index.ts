@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { ExecutionFilter, ExecutionLogEntry } from '../types/ipc'
+import type { ExecutionFilter, ExecutionLogEntry, ServerConfig, NetworkConfig, ServerStatus } from '../types/ipc'
 
 if (!process.contextIsolated) {
   throw new Error('contextIsolation must be enabled in the BrowserWindow')
@@ -16,6 +16,12 @@ try {
     executionHistory: {
       getLogs: (filter: ExecutionFilter): Promise<ExecutionLogEntry[]> => ipcRenderer.invoke('execution-history:getLogs', filter),
       clearLogs: (): Promise<boolean> => ipcRenderer.invoke('execution-history:clearLogs')
+    },
+    connectionConfig: {
+      getConfig: (): Promise<ServerConfig> => ipcRenderer.invoke('connection-config:getConfig'),
+      saveNetworkConfig: (config: NetworkConfig): Promise<boolean> => ipcRenderer.invoke('connection-config:saveNetworkConfig', config),
+      regenerateApiKey: (): Promise<string> => ipcRenderer.invoke('connection-config:regenerateApiKey'),
+      getServerStatus: (): Promise<ServerStatus> => ipcRenderer.invoke('connection-config:getServerStatus')
     }
   })
 } catch (error) {
