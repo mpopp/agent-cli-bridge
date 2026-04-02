@@ -24,7 +24,7 @@ We follow a modular approach prioritizing pure Typescript functions and testabil
 **Independent Test Criteria**: A basic test script checks if a direct blocklist match (like `rm -rf /`) returns a block verdict.
 
 - [x] T004 [P] [US1] Define immutable blocklist rules covering 10 categories of destruction in `src/main/security/blocklist.ts`
-- [x] T005 [P] [US1] Implement `BlocklistCheck` in `src/main/security/checks/blocklist.check.ts`
+- [x] T005 [P] [US1] Implement `BlocklistCheck` in `src/main/security/checks/blocklist-check.ts`
 - [x] T006 [US1] Implement Chain of Responsibility coordinator in `src/main/security/engine.ts`
 - [x] T007 [US1] Write blocklist unit tests in `tests/unit/security/blocklist.test.ts`
 

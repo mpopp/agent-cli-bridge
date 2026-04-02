@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { SecurityEngine } from '../../../src/main/security/engine';
-import { BlocklistCheck } from '../../../src/main/security/checks/blocklist.check';
+import { BlocklistCheck } from '../../../src/main/security/checks/blocklist-check';
 
 describe('SecurityEngine Integration & Performance', () => {
   const engine = new SecurityEngine([new BlocklistCheck()]);

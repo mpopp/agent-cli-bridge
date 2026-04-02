@@ -34,7 +34,7 @@
 
 - [ ] T003 Create database migration for the configuration table using db-migrate in `src/main/database/migrations/`
 - [ ] T004 [P] Create Config repository for database access in `src/main/database/config.ts`
-- [ ] T005 [P] Create unit tests for Config service in `tests/unit/services/config.service.test.ts`
+- [ ] T005 [P] Create unit tests for Config service in `tests/unit/services/config-service.test.ts`
 - [ ] T006 Implement Config service (port allocation, UUID generation, DB integration) in `src/main/services/config.service.ts`
 
 ## Phase 3: [US1] Background Server Initialization

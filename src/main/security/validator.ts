@@ -1,5 +1,5 @@
 import { SecurityEngine } from './engine'
-import { BlocklistCheck } from './checks/blocklist.check'
+import { BlocklistCheck } from './checks/blocklist-check'
 import { AppError } from '../errors/AppError'
 
 const engine = new SecurityEngine([new BlocklistCheck()])

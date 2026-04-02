@@ -54,7 +54,7 @@ src/
         ├── engine.ts                    # Chain of Responsibility coordinator
         ├── blocklist.ts                 # Immutable blocklist rules 
         ├── checks/
-        │   └── blocklist.check.ts       # Implementation of SecurityCheck for blocklist
+        │   └── blocklist-check.ts       # Implementation of SecurityCheck for blocklist
         └── utils/
             ├── normalize.ts             # Input sanitization
             └── split-commands.ts        # Command segmentation
