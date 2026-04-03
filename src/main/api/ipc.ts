@@ -1,8 +1,9 @@
 import { ipcMain } from 'electron'
 import { getLogs, clearLogs } from '../services/history-service'
-import { ExecutionFilter, NetworkConfig } from '../../types/ipc'
+import { ExecutionFilter, NetworkConfig, NewTunnelConfig, UpdateTunnelConfig } from '../../types/ipc'
 import { getConfig, saveNetworkConfig, regenerateApiKey } from '../services/config.service'
 import { getServerStatus, stopServer, startServer } from '../api/server'
+import { getTunnelConfigs, addTunnelConfig, editTunnelConfig, removeTunnelConfig, setActiveTunnel } from '../services/tunnel.service'
 
 export function setupIpcHandlers() {
   ipcMain.handle('execution-history:getLogs', (_, filter: ExecutionFilter) => {
@@ -33,5 +34,25 @@ export function setupIpcHandlers() {
 
   ipcMain.handle('connection-config:getServerStatus', () => {
     return { status: getServerStatus() }
+  })
+
+  ipcMain.handle('tunnel-config:getAll', () => {
+    return getTunnelConfigs()
+  })
+
+  ipcMain.handle('tunnel-config:add', (_, config: NewTunnelConfig) => {
+    return addTunnelConfig(config.name, config.command)
+  })
+
+  ipcMain.handle('tunnel-config:update', (_, config: UpdateTunnelConfig) => {
+    editTunnelConfig(config.id, config.name, config.command)
+  })
+
+  ipcMain.handle('tunnel-config:remove', (_, id: number) => {
+    removeTunnelConfig(id)
+  })
+
+  ipcMain.handle('tunnel-config:setActive', (_, id: number) => {
+    setActiveTunnel(id)
   })
 }

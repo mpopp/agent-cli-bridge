@@ -16,10 +16,10 @@
 
 **Purpose**: Database migration and type definitions — required before any story work begins
 
-- [ ] T001 Create db-migrate migration file `src/main/database/migrations/20260403000000-tunnel-config.js` referencing the SQL files
-- [ ] T002 Create SQL up-migration `src/main/database/migrations/sqls/20260403000000-tunnel-config-up.sql` creating `tunnel_configs` table with `id`, `name`, `command`, `is_active`, `created_at`, `updated_at` columns
-- [ ] T003 Create SQL down-migration `src/main/database/migrations/sqls/20260403000000-tunnel-config-down.sql` dropping `tunnel_configs` table
-- [ ] T004 [P] Add `TunnelConfig` and `NewTunnelConfig` TypeScript interfaces to `src/types/ipc.ts`
+- [x] T001 Create db-migrate migration file `src/main/database/migrations/20260403000000-tunnel-config.js` referencing the SQL files
+- [x] T002 Create SQL up-migration `src/main/database/migrations/sqls/20260403000000-tunnel-config-up.sql` creating `tunnel_configs` table with `id`, `name`, `command`, `is_active`, `created_at`, `updated_at` columns
+- [x] T003 Create SQL down-migration `src/main/database/migrations/sqls/20260403000000-tunnel-config-down.sql` dropping `tunnel_configs` table
+- [x] T004 [P] Add `TunnelConfig` and `NewTunnelConfig` TypeScript interfaces to `src/types/ipc.ts`
 
 ---
 
@@ -29,11 +29,11 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Implement tunnel repository functions (`getAllTunnelConfigs`, `insertTunnelConfig`, `updateTunnelConfig`, `deleteTunnelConfig`, `setActiveTunnelConfig`, `getActiveTunnelConfig`) in `src/main/database/config.ts`
-- [ ] T006 Create `src/main/services/tunnel.service.ts` with service functions (`getTunnelConfigs`, `addTunnelConfig`, `updateTunnelConfig`, `removeTunnelConfig`, `setActiveTunnel`, `getActiveTunnel`) wrapping the repository layer
-- [ ] T007 Register all 5 IPC handlers (`tunnel-config:getAll`, `tunnel-config:add`, `tunnel-config:update`, `tunnel-config:remove`, `tunnel-config:setActive`) in `src/main/api/ipc.ts`
-- [ ] T008 Expose `window.api.tunnelConfig` namespace (`getAll`, `add`, `update`, `remove`, `setActive`) via contextBridge in `src/preload/index.ts`
-- [ ] T009 Add `tunnelConfig` API type declarations to `src/preload/index.d.ts`
+- [x] T005 Implement tunnel repository functions (`getAllTunnelConfigs`, `insertTunnelConfig`, `updateTunnelConfig`, `deleteTunnelConfig`, `setActiveTunnelConfig`, `getActiveTunnelConfig`) in `src/main/database/config.ts`
+- [x] T006 Create `src/main/services/tunnel.service.ts` with service functions (`getTunnelConfigs`, `addTunnelConfig`, `updateTunnelConfig`, `removeTunnelConfig`, `setActiveTunnel`, `getActiveTunnel`) wrapping the repository layer
+- [x] T007 Register all 5 IPC handlers (`tunnel-config:getAll`, `tunnel-config:add`, `tunnel-config:update`, `tunnel-config:remove`, `tunnel-config:setActive`) in `src/main/api/ipc.ts`
+- [x] T008 Expose `window.api.tunnelConfig` namespace (`getAll`, `add`, `update`, `remove`, `setActive`) via contextBridge in `src/preload/index.ts`
+- [x] T009 Add `tunnelConfig` API type declarations to `src/preload/index.d.ts`
 
 **Checkpoint**: Foundation ready — all IPC channels functional, UI work can begin
 
@@ -45,10 +45,10 @@
 
 **Independent Test**: Open the Connection Configuration page → click "Add" → fill Name and Command → click Save → verify new entry appears in the dropdown.
 
-- [ ] T010 [US1] Add `TunnelSection` component scaffold (dropdown + Add/Edit/Remove/Use buttons) to `src/renderer/pages/ConnectionConfig.tsx` below the API Key `<Paper>` block, wiring `useEffect` to load tunnel configs on mount via `window.api.tunnelConfig.getAll()`
-- [ ] T011 [US1] Implement the Add/Edit dialog component (Name field, Command field, Save button, inline validation for empty fields) inside `src/renderer/pages/ConnectionConfig.tsx`
-- [ ] T012 [US1] Wire the "Add" button to open the dialog in add-mode; on Save call `window.api.tunnelConfig.add({ name, command })` and refresh the dropdown in `src/renderer/pages/ConnectionConfig.tsx`
-- [ ] T013 [P] [US1] Add i18n keys for the Tunnel section (`tunnel.section_title`, `tunnel.add_button`, `tunnel.edit_button`, `tunnel.remove_button`, `tunnel.use_button`, `tunnel.dialog_title_add`, `tunnel.dialog_title_edit`, `tunnel.name_label`, `tunnel.command_label`, `tunnel.save_button`, `tunnel.name_required`, `tunnel.command_required`, `tunnel.empty_state`) to `src/renderer/i18n/locales/en/common.json`
+- [x] T010 [US1] Add `TunnelSection` component scaffold (dropdown + Add/Edit/Remove/Use buttons) to `src/renderer/pages/ConnectionConfig.tsx` below the API Key `<Paper>` block, wiring `useEffect` to load tunnel configs on mount via `window.api.tunnelConfig.getAll()`
+- [x] T011 [US1] Implement the Add/Edit dialog component (Name field, Command field, Save button, inline validation for empty fields) inside `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T012 [US1] Wire the "Add" button to open the dialog in add-mode; on Save call `window.api.tunnelConfig.add({ name, command })` and refresh the dropdown in `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T013 [P] [US1] Add i18n keys for the Tunnel section (`tunnel.section_title`, `tunnel.add_button`, `tunnel.edit_button`, `tunnel.remove_button`, `tunnel.use_button`, `tunnel.dialog_title_add`, `tunnel.dialog_title_edit`, `tunnel.name_label`, `tunnel.command_label`, `tunnel.save_button`, `tunnel.name_required`, `tunnel.command_required`, `tunnel.empty_state`) to `src/renderer/i18n/locales/en/common.json`
 
 **Checkpoint**: User Story 1 fully functional — new tunnel configs can be created and appear in the dropdown
 
@@ -60,8 +60,8 @@
 
 **Independent Test**: Select an existing entry → click "Edit" → verify dialog pre-filled → change fields → click Save → verify dropdown reflects updated values.
 
-- [ ] T014 [US2] Wire the "Edit" button (enabled only when an entry is selected) to open the dialog in edit-mode pre-filled with the selected entry's name and command in `src/renderer/pages/ConnectionConfig.tsx`
-- [ ] T015 [US2] On Save in edit-mode call `window.api.tunnelConfig.update({ id, name, command })` and refresh the dropdown in `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T014 [US2] Wire the "Edit" button (enabled only when an entry is selected) to open the dialog in edit-mode pre-filled with the selected entry's name and command in `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T015 [US2] On Save in edit-mode call `window.api.tunnelConfig.update({ id, name, command })` and refresh the dropdown in `src/renderer/pages/ConnectionConfig.tsx`
 
 **Checkpoint**: User Story 2 fully functional — existing tunnel configs can be edited
 
@@ -73,10 +73,10 @@
 
 **Independent Test**: Select an entry → click "Remove" → verify confirmation dialog appears → confirm → verify entry is gone; repeat until empty → verify placeholder state, no errors.
 
-- [ ] T016 [US3] Wire the "Remove" button (enabled only when an entry is selected) to open a confirmation dialog in `src/renderer/pages/ConnectionConfig.tsx`
-- [ ] T017 [US3] On confirmation call `window.api.tunnelConfig.remove(id)`, refresh the dropdown, and show placeholder state when the list is empty in `src/renderer/pages/ConnectionConfig.tsx`
-- [ ] T018 [P] [US3] Add i18n keys for the Remove confirmation dialog (`tunnel.remove_confirm_title`, `tunnel.remove_confirm_text`, `tunnel.remove_confirm_yes`, `tunnel.remove_confirm_no`) to `src/renderer/i18n/locales/en/common.json`
-- [ ] T021 [US3] Ensure that when the active tunnel config is removed (US3 flow), the active state is cleared in the service layer (`removeTunnelConfig` in `src/main/services/tunnel.service.ts` calls `setActiveTunnelConfig(null)` when the removed entry was active)
+- [x] T016 [US3] Wire the "Remove" button (enabled only when an entry is selected) to open a confirmation dialog in `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T017 [US3] On confirmation call `window.api.tunnelConfig.remove(id)`, refresh the dropdown, and show placeholder state when the list is empty in `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T018 [P] [US3] Add i18n keys for the Remove confirmation dialog (`tunnel.remove_confirm_title`, `tunnel.remove_confirm_text`, `tunnel.remove_confirm_yes`, `tunnel.remove_confirm_no`) to `src/renderer/i18n/locales/en/common.json`
+- [x] T021 [US3] Ensure that when the active tunnel config is removed (US3 flow), the active state is cleared in the service layer (`removeTunnelConfig` in `src/main/services/tunnel.service.ts` calls `setActiveTunnelConfig(null)` when the removed entry was active)
 
 **Checkpoint**: User Story 3 fully functional — tunnel configs can be removed; empty state handled cleanly
 
@@ -88,8 +88,8 @@
 
 **Independent Test**: Select an entry → click "Use" → reload the page → verify the same entry is pre-selected in the dropdown. Remove the active entry → reload → verify dropdown is empty without errors.
 
-- [ ] T019 [US4] Wire the "Use" button (enabled only when an entry is selected) to call `window.api.tunnelConfig.setActive(id)` and update the active selection state in `src/renderer/pages/ConnectionConfig.tsx`
-- [ ] T020 [US4] On page load, after fetching all tunnel configs, pre-select the entry where `is_active = 1` in the dropdown (or leave empty if none) in `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T019 [US4] Wire the "Use" button (enabled only when an entry is selected) to call `window.api.tunnelConfig.setActive(id)` and update the active selection state in `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T020 [US4] On page load, after fetching all tunnel configs, pre-select the entry where `is_active = 1` in the dropdown (or leave empty if none) in `src/renderer/pages/ConnectionConfig.tsx`
 
 **Checkpoint**: User Story 4 fully functional — active tunnel persists across page loads; cleared correctly on removal
 
@@ -99,11 +99,11 @@
 
 **Purpose**: Button enable/disable states, error handling, snackbar feedback, and unit tests
 
-- [ ] T022 Ensure "Edit", "Remove", and "Use" buttons are disabled (not just hidden) when no dropdown entry is selected across all states in `src/renderer/pages/ConnectionConfig.tsx`
-- [ ] T023 Add snackbar error feedback for IPC failures (add/update/remove/setActive) using the existing `showSnackbar` pattern in `src/renderer/pages/ConnectionConfig.tsx`
-- [ ] T024 [P] Write unit tests for all tunnel service functions (`getTunnelConfigs`, `addTunnelConfig`, `updateTunnelConfig`, `removeTunnelConfig`, `setActiveTunnel`, `getActiveTunnel`) in `tests/unit/tunnel.service.test.ts`
-- [ ] T025 [P] Write E2E test covering the full tunnel config lifecycle (add → edit → use → remove → empty state) in `tests/e2e/tunnel-config.spec.ts`
-- [ ] T026 update the CHANGELONG.md file with the new feature
+- [x] T022 Ensure "Edit", "Remove", and "Use" buttons are disabled (not just hidden) when no dropdown entry is selected across all states in `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T023 Add snackbar error feedback for IPC failures (add/update/remove/setActive) using the existing `showSnackbar` pattern in `src/renderer/pages/ConnectionConfig.tsx`
+- [x] T024 [P] Write unit tests for all tunnel service functions (`getTunnelConfigs`, `addTunnelConfig`, `updateTunnelConfig`, `removeTunnelConfig`, `setActiveTunnel`, `getActiveTunnel`) in `tests/unit/tunnel.service.test.ts`
+- [x] T025 [P] Write E2E test covering the full tunnel config lifecycle (add → edit → use → remove → empty state) in `tests/e2e/tunnel-config.spec.ts`
+- [x] T026 update the CHANGELONG.md file with the new feature
 
 ---
 

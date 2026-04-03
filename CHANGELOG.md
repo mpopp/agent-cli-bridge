@@ -15,3 +15,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - POST /exec Endpoint
 - Execution History
 - Connection Configuration
+- Tunnel Configuration (add, edit, remove, use/activate tunnel configs via SQLite + Electron IPC)

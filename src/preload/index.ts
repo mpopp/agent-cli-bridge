@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { ExecutionFilter, ExecutionLogEntry, ServerConfig, NetworkConfig, ServerStatus } from '../types/ipc'
+import type { ExecutionFilter, ExecutionLogEntry, ServerConfig, NetworkConfig, ServerStatus, TunnelConfig, NewTunnelConfig, UpdateTunnelConfig } from '../types/ipc'
 
 if (!process.contextIsolated) {
   throw new Error('contextIsolation must be enabled in the BrowserWindow')
@@ -22,6 +22,13 @@ try {
       saveNetworkConfig: (config: NetworkConfig): Promise<boolean> => ipcRenderer.invoke('connection-config:saveNetworkConfig', config),
       regenerateApiKey: (): Promise<string> => ipcRenderer.invoke('connection-config:regenerateApiKey'),
       getServerStatus: (): Promise<ServerStatus> => ipcRenderer.invoke('connection-config:getServerStatus')
+    },
+    tunnelConfig: {
+      getAll: (): Promise<TunnelConfig[]> => ipcRenderer.invoke('tunnel-config:getAll'),
+      add: (config: NewTunnelConfig): Promise<TunnelConfig> => ipcRenderer.invoke('tunnel-config:add', config),
+      update: (config: UpdateTunnelConfig): Promise<void> => ipcRenderer.invoke('tunnel-config:update', config),
+      remove: (id: number): Promise<void> => ipcRenderer.invoke('tunnel-config:remove', id),
+      setActive: (id: number): Promise<void> => ipcRenderer.invoke('tunnel-config:setActive', id)
     }
   })
 } catch (error) {

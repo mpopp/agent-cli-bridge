@@ -62,5 +62,29 @@
     "regenerate_confirm_yes": "Regenerate",
     "regenerate_confirm_no": "Cancel",
     "regenerate_success": "API key regenerated successfully."
+  },
+  "tunnel": {
+    "section_title": "Tunnel",
+    "add_button": "Add",
+    "edit_button": "Edit",
+    "remove_button": "Remove",
+    "use_button": "Use",
+    "dialog_title_add": "Add Tunnel Configuration",
+    "dialog_title_edit": "Edit Tunnel Configuration",
+    "name_label": "Name",
+    "command_label": "Command",
+    "save_button": "Save",
+    "name_required": "Name is required",
+    "command_required": "Command is required",
+    "empty_state": "No tunnel configurations saved.",
+    "remove_confirm_title": "Remove Tunnel Configuration?",
+    "remove_confirm_text": "Are you sure you want to remove this tunnel configuration? This action cannot be undone.",
+    "remove_confirm_yes": "Remove",
+    "remove_confirm_no": "Cancel",
+    "add_success": "Tunnel configuration added successfully.",
+    "update_success": "Tunnel configuration updated successfully.",
+    "remove_success": "Tunnel configuration removed successfully.",
+    "use_success": "Tunnel configuration set as active.",
+    "error_generic": "An error occurred: {{error}}"
   }
 }
