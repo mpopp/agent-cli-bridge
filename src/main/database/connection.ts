@@ -5,7 +5,8 @@ import { logger } from '../logger'
 
 let dbInstance: ReturnType<typeof Database> | null = null
 
-export const getDbPath = () => join(app.getPath('userData'), 'agent-cli-bridge.db')
+export const getDbPath = () =>
+  process.env.AGENT_CLI_BRIDGE_DB_PATH || join(app.getPath('userData'), 'agent-cli-bridge.db')
 
 export const getDb = (): Database.Database => {
   if (!dbInstance) {

@@ -1,11 +1,15 @@
 import { test, expect, _electron as electron } from '@playwright/test'
 import type { ElectronApplication, Page } from '@playwright/test'
+import { E2E_DB_PATH } from './e2e-db-path'
 
 let electronApp: ElectronApplication
 let window: Page
 
 test.beforeEach(async () => {
-  electronApp = await electron.launch({ args: ['.', '--no-sandbox'] })
+  electronApp = await electron.launch({
+    args: ['.', '--no-sandbox'],
+    env: { ...process.env, AGENT_CLI_BRIDGE_DB_PATH: E2E_DB_PATH }
+  })
   window = await electronApp.firstWindow()
   await window.waitForLoadState('domcontentloaded')
 
