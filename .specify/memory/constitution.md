@@ -1,14 +1,11 @@
 <!--
 Sync Impact Report:
-- Version change: 2.1.0 -> 2.2.0
-- Modified principles: IV (added Definition of Done rule)
-- Modified conventions: Changelog (aligned with DoD)
-- Added sections: Definition of Done in Principle IV
+- Version change: 2.2.0 -> 2.2.1
+- Modified principles: None
+- Modified conventions: Versioning (clarified two-step version bump process)
+- Added sections: None
 - Removed sections: None
-- Templates requiring updates:
-  ✅ .specify/templates/tasks-template.md (added mandatory DoD completion phase)
-  ✅ .specify/templates/plan-template.md (reviewed, no changes needed)
-  ✅ .specify/templates/spec-template.md (reviewed, no changes needed)
+- Templates requiring updates: None
 - Follow-up TODOs: None
 -->
 
@@ -64,7 +61,7 @@ The REST API is the primary integration surface for AI agent platforms (ChatGPT,
 - The spec MUST be served by the running application at a well-known endpoint (e.g., `GET /openapi.yaml`) so users can retrieve it from their dashboard and provide it directly to AI agent platforms.
 - The spec MUST include: operation descriptions written for AI agent consumption (clear, unambiguous, action-oriented), request/response schemas with examples, error response schemas, and authentication requirements.
 - Spec validation MUST run in CI (when CI is established) and during local development to catch drift between spec and implementation.
-- The OpenAPI spec version MUST match the application version (SemVer). When a release changes the API, the spec version is bumped accordingly.
+- The OpenAPI spec version MUST match the application version (SemVer). When a feature implementation changes the API, the spec version is bumped accordingly.
 
 ### IV. Test-Driven Development
 
@@ -222,7 +219,9 @@ agent-cli-bridge/
 - **Database location:** `app.getPath('userData')/agent-cli-bridge.db` — never in the project directory or temp folders
 - **Database migrations:** Sequential numbered migration files, run automatically on app startup. The tool db-migrate (https://db-migrate.readthedocs.io/en/latest) MUST be used. Database schema migrations via different mechanisms are not allowed!
 - **Internationalization:** All user-facing strings MUST use i18next translation keys. No hardcoded UI strings. English is the default and only language at launch; additional languages can be added by providing translation files without code changes.
-- **Versioning:** SemVer for the application.
+- **Versioning:** SemVer for the application. Version bumps happen in two distinct steps:
+  1. **Per feature (DoD):** `package.json` (and `openapi.yaml`) are incremented when the feature is merged to `main` — PATCH for fixes, MINOR for new features, MAJOR for breaking changes. This is mandatory and is part of the Definition of Done regardless of whether a binary has been built or published.
+  2. **At release:** The `[Unreleased]` section in `CHANGELOG.md` is promoted to the current version number and a binary artifact is published. This is the only time the changelog section receives a version label.
 - **Changelog:** `CHANGELOG.md` in Keep a Changelog format (https://keepachangelog.com/). Categories: Added, Changed, Deprecated, Removed, Fixed, Security. Every feature MUST include a changelog entry under `[Unreleased]` — this is part of the Definition of Done (see Principle IV). The `[Unreleased]` section is promoted to a versioned section at release time.
 - **Commit messages:** Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `refactor:`, `chore:`)
 - **Branching:** Feature branches off `main`, squash merge via PR
@@ -258,4 +257,4 @@ The following features are acknowledged but intentionally deferred. They MUST NO
   - PATCH: Clarifications, wording fixes, non-semantic refinements
 - Security principles (I, II) may only be amended to become **more restrictive**, never less.
 
-**Version**: 2.2.0 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-04-02
+**Version**: 2.2.1 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-04-03
