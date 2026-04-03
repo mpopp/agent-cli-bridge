@@ -7,6 +7,8 @@ import { initServerConfig } from './services/config.service'
 import { startServer, stopServer } from './api/server'
 import { cleanupOldLogs } from './services/history-service'
 import { setupIpcHandlers } from './api/ipc'
+import { tunnelManager } from './services/tunnel-process-manager'
+import { getActiveTunnelConfig } from './database/config'
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -43,6 +45,10 @@ app.whenReady().then(async () => {
     await startServer(config)
     await cleanupOldLogs()
     setupIpcHandlers()
+    const activeConfig = getActiveTunnelConfig()
+    if (activeConfig) {
+      tunnelManager.start(activeConfig)
+    }
   } catch (error) {
     logger.error({ error }, 'Failed to initialize database')
     app.quit()
@@ -59,6 +65,17 @@ app.whenReady().then(async () => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
+  }
+})
+
+let isQuitting = false
+app.on('before-quit', (event) => {
+  if (!isQuitting) {
+    event.preventDefault()
+    isQuitting = true
+    tunnelManager.stop().then(() => {
+      app.quit()
+    })
   }
 })
 

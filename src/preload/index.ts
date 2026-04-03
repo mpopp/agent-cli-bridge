@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { ExecutionFilter, ExecutionLogEntry, ServerConfig, NetworkConfig, ServerStatus, TunnelConfig, NewTunnelConfig, UpdateTunnelConfig } from '../types/ipc'
+import type { ExecutionFilter, ExecutionLogEntry, ServerConfig, NetworkConfig, ServerStatus, TunnelConfig, NewTunnelConfig, UpdateTunnelConfig, TunnelProcessState, TunnelStateChangedPayload } from '../types/ipc'
 
 if (!process.contextIsolated) {
   throw new Error('contextIsolation must be enabled in the BrowserWindow')
@@ -29,6 +29,14 @@ try {
       update: (config: UpdateTunnelConfig): Promise<void> => ipcRenderer.invoke('tunnel-config:update', config),
       remove: (id: number): Promise<void> => ipcRenderer.invoke('tunnel-config:remove', id),
       setActive: (id: number): Promise<void> => ipcRenderer.invoke('tunnel-config:setActive', id)
+    },
+    tunnelExecution: {
+      getState: (): Promise<{ state: TunnelProcessState }> => ipcRenderer.invoke('tunnel-execution:getState'),
+      onStateChanged: (cb: (payload: TunnelStateChangedPayload) => void): (() => void) => {
+        const listener = (_event: Electron.IpcRendererEvent, payload: TunnelStateChangedPayload) => cb(payload)
+        ipcRenderer.on('tunnel-execution:stateChanged', listener)
+        return () => ipcRenderer.removeListener('tunnel-execution:stateChanged', listener)
+      }
     }
   })
 } catch (error) {

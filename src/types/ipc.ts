@@ -51,3 +51,9 @@ export interface UpdateTunnelConfig {
   name: string;
   command: string;
 }
+
+export type TunnelProcessState = 'idle' | 'running' | 'stopped' | 'error';
+
+export interface TunnelStateChangedPayload {
+  state: TunnelProcessState;
+}

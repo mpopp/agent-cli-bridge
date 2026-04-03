@@ -33,9 +33,9 @@
   },
   "connection": {
     "title": "Connection Configuration",
-    "status_running": "Running",
-    "status_stopped": "Stopped",
-    "status_error": "Error",
+    "status_running": "REST Server Running",
+    "status_stopped": "REST Server Stopped",
+    "status_error": "REST Server Error",
     "server_status": "Server Status",
     "network_settings": "Network Settings",
     "address_label": "Bind Address",
@@ -85,6 +85,10 @@
     "update_success": "Tunnel configuration updated successfully.",
     "remove_success": "Tunnel configuration removed successfully.",
     "use_success": "Tunnel configuration set as active.",
-    "error_generic": "An error occurred: {{error}}"
+    "error_generic": "An error occurred: {{error}}",
+    "chip_not_configured": "Not Configured",
+    "chip_running": "Tunnel Running",
+    "chip_stopped": "Tunnel Stopped",
+    "chip_error": "Tunnel Error"
   }
 }
