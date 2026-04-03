@@ -39,7 +39,7 @@ Agent CLI Bridge closes that gap. Your AI assistant sends commands, your machine
 ```
 
 1. **Start Agent CLI Bridge** -- it launches a local REST API (port is auto-assigned on first start, shown in the UI, and persisted for future runs)
-2. **Start your tunnel** -- point ngrok or Cloudflare Tunnel to that local port
+2. **Configure your tunnel** -- save your ngrok or Cloudflare tunnel command in the UI; Agent CLI Bridge starts it automatically on every launch
 3. **Connect your AI service** -- use the public tunnel URL as a tool/API endpoint in your AI chat
 4. **Chat and execute** -- your AI assistant sends commands via the API, your machine runs them, results go back
 
@@ -69,23 +69,69 @@ npm run dev
 
 The app starts and automatically selects a port for the REST API. The port is displayed in the Electron UI and saved to the local database. You can change it manually in the UI if needed -- all subsequent starts will use the saved port.
 
-### 3. Start your tunnel
+### 3. Configure your tunnel
 
-In a separate terminal, point your tunnel to the port shown in the UI:
+Open the **Connection Configuration** page in the UI and scroll to the **Tunnel** section. Click **Add** to save a tunnel command by name:
 
-```bash
-# Using ngrok (replace PORT with the port shown in the UI)
-ngrok http PORT
-
-# Using Cloudflare Tunnel
-cloudflared tunnel --url http://localhost:PORT
 ```
+Name:    My ngrok tunnel
+Command: ngrok http PORT
+```
+
+Replace `PORT` with the API port shown in the UI (or use `$PORT` if your tunnel command supports it). Once saved, select the entry and click **Use** to mark it as active.
+
+Agent CLI Bridge will automatically start the configured tunnel command every time the application launches. You can save multiple configurations and switch between them at any time.
+
+The **Tunnel** status chip in the top-right corner shows the current state: **Running**, **Stopped**, **Error**, or **Not Configured**.
 
 ### 4. Connect your AI service
 
 Copy the public tunnel URL (e.g. `https://abc123.ngrok-free.app`) and configure it as a tool endpoint in your AI chat service.
 
 All API calls require your API key (also shown in the UI) -- see [Security](#security).
+
+---
+
+## Tunnel Management
+
+Agent CLI Bridge has built-in support for managing and auto-starting your tunnel, so you never need to open a separate terminal to keep the tunnel alive.
+
+### Saving tunnel configurations
+
+On the **Connection Configuration** page, the **Tunnel** section lets you maintain a list of named tunnel commands:
+
+- **Add** -- opens a dialog with a **Name** and **Command** field. Fill in both and click **Save** to store the configuration.
+- **Edit** -- opens the same dialog pre-filled with the selected entry so you can update it.
+- **Remove** -- asks for confirmation before deleting the entry. If the deleted entry was active, the tunnel is stopped first and the active state is cleared.
+- **Use** -- marks the selected entry as the active tunnel configuration. The previously running tunnel (if any) is stopped immediately and the new command is started.
+
+The dropdown always pre-selects the currently active configuration so you can see at a glance which tunnel command is in use.
+
+### Automatic startup
+
+When the application starts and an active tunnel configuration is set, the configured command is executed automatically in the background. No manual intervention or extra terminal window is needed.
+
+### Status monitoring
+
+Two status chips are displayed in the top-right corner of the application:
+
+| Chip | Description |
+|---|---|
+| **Rest Server** | State of the local REST API (previously labelled "Server") |
+| **Tunnel** | State of the tunnel process |
+
+The **Tunnel** chip can show the following states:
+
+| State | Meaning |
+|---|---|
+| Running | Tunnel process is active |
+| Stopped | Process terminated unexpectedly |
+| Error | Process failed to start |
+| Not Configured | No active tunnel configuration is set |
+
+### Clean shutdown
+
+When you close the application, the running tunnel process is terminated cleanly. If it does not exit within a reasonable timeout (5 seconds), it is forcefully killed -- ensuring no orphaned tunnel processes are left behind.
 
 ---
 
@@ -227,7 +273,6 @@ Since Agent CLI Bridge uses a standard REST API, it should be compatible with an
 
 Ideas for future development -- no guarantees or timelines:
 
-- [ ] Built-in tunnel support (no separate ngrok/Cloudflare setup needed)
 - [ ] Configurable command allowlist / blocklist via UI
 - [ ] Sandboxed execution (container-based)
 - [ ] Pre-built binaries (AppImage, .deb)

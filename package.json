@@ -1,6 +1,6 @@
 {
   "name": "agent-cli-bridge",
-  "version": "1.0.0",
+  "version": "1.7.0",
   "description": "Agent CLI Bridge",
   "main": "./out/main/index.js",
   "author": "Matthias Popp",
