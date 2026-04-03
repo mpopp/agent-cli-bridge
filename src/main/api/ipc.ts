@@ -2,7 +2,7 @@ import { ipcMain } from 'electron'
 import { getLogs, clearLogs } from '../services/history-service'
 import { ExecutionFilter, NetworkConfig, NewTunnelConfig, UpdateTunnelConfig } from '../../types/ipc'
 import { getConfig, saveNetworkConfig, regenerateApiKey } from '../services/config.service'
-import { getServerStatus, stopServer, startServer } from '../api/server'
+import { getServerStatus, stopServer, startServer } from './server'
 import { getTunnelConfigs, addTunnelConfig, editTunnelConfig, removeTunnelConfig, setActiveTunnel } from '../services/tunnel.service'
 
 export function setupIpcHandlers() {

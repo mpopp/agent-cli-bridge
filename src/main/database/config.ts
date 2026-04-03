@@ -80,6 +80,7 @@ export const deleteTunnelConfig = (id: number): void => {
 
 export const setActiveTunnelConfig = (id: number | null): void => {
   const db = getDb()
+  //Intended "update all" statement here to set the currently active tunnel config to inactive
   db.prepare('UPDATE tunnel_configs SET is_active = 0, updated_at = CURRENT_TIMESTAMP').run()
   if (id !== null) {
     db.prepare('UPDATE tunnel_configs SET is_active = 1, updated_at = CURRENT_TIMESTAMP WHERE id = ?').run(id)
