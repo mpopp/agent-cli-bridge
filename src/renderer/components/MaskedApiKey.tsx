@@ -16,7 +16,7 @@ export const MaskedApiKey: React.FC<MaskedApiKeyProps> = ({ apiKey }) => {
 
   // Auto-hide after 30 seconds
   useEffect(() => {
-    let timer: NodeJS.Timeout
+    let timer: ReturnType<typeof setTimeout>
     if (showKey) {
       timer = setTimeout(() => {
         setShowKey(false)
