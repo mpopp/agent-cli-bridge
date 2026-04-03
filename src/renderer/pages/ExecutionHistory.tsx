@@ -57,6 +57,19 @@ export function ExecutionHistory() {
     fetchLogs(true);
   }, [statusFilter]);
 
+  useEffect(() => {
+    const unsubscribe = window.api.executionHistory.onNewEntry(({ entry }) => {
+      if (statusFilter === 'all' || entry.status === statusFilter) {
+        setLogs((prev) => [entry, ...prev]);
+        setOffset((prev) => prev + 1);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [statusFilter]);
+
   const handleClear = async () => {
     try {
       const success = await window.api.executionHistory.clearLogs();

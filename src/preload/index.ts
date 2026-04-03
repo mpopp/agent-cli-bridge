@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { ExecutionFilter, ExecutionLogEntry, ServerConfig, NetworkConfig, ServerStatus, TunnelConfig, NewTunnelConfig, UpdateTunnelConfig, TunnelProcessState, TunnelStateChangedPayload } from '../types/ipc'
+import type { ExecutionFilter, ExecutionLogEntry, ExecutionHistoryNewEntryPayload, ServerConfig, NetworkConfig, ServerStatus, TunnelConfig, NewTunnelConfig, UpdateTunnelConfig, TunnelProcessState, TunnelStateChangedPayload } from '../types/ipc'
 
 if (!process.contextIsolated) {
   throw new Error('contextIsolation must be enabled in the BrowserWindow')
@@ -15,7 +15,12 @@ try {
     },
     executionHistory: {
       getLogs: (filter: ExecutionFilter): Promise<ExecutionLogEntry[]> => ipcRenderer.invoke('execution-history:getLogs', filter),
-      clearLogs: (): Promise<boolean> => ipcRenderer.invoke('execution-history:clearLogs')
+      clearLogs: (): Promise<boolean> => ipcRenderer.invoke('execution-history:clearLogs'),
+      onNewEntry: (cb: (payload: ExecutionHistoryNewEntryPayload) => void): (() => void) => {
+        const listener = (_event: Electron.IpcRendererEvent, payload: ExecutionHistoryNewEntryPayload) => cb(payload)
+        ipcRenderer.on('execution-history:newEntry', listener)
+        return () => ipcRenderer.removeListener('execution-history:newEntry', listener)
+      }
     },
     connectionConfig: {
       getConfig: (): Promise<ServerConfig> => ipcRenderer.invoke('connection-config:getConfig'),

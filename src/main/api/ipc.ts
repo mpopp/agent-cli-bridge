@@ -1,5 +1,5 @@
 import { ipcMain, BrowserWindow } from 'electron'
-import { getLogs, clearLogs } from '../services/history-service'
+import { getLogs, clearLogs, historyEventEmitter } from '../services/history-service'
 import { ExecutionFilter, NetworkConfig, NewTunnelConfig, UpdateTunnelConfig } from '../../types/ipc'
 import { getConfig, saveNetworkConfig, regenerateApiKey } from '../services/config.service'
 import { getServerStatus, stopServer, startServer } from './server'
@@ -9,6 +9,10 @@ import { tunnelManager } from '../services/tunnel-process-manager'
 export function setupIpcHandlers() {
   tunnelManager.on('stateChanged', (payload) => {
     BrowserWindow.getAllWindows()[0]?.webContents.send('tunnel-execution:stateChanged', payload)
+  })
+
+  historyEventEmitter.on('newEntry', (entry) => {
+    BrowserWindow.getAllWindows()[0]?.webContents.send('execution-history:newEntry', { entry })
   })
 
   ipcMain.handle('tunnel-execution:getState', () => {

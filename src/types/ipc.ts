@@ -57,3 +57,7 @@ export type TunnelProcessState = 'idle' | 'running' | 'stopped' | 'error';
 export interface TunnelStateChangedPayload {
   state: TunnelProcessState;
 }
+
+export interface ExecutionHistoryNewEntryPayload {
+  entry: ExecutionLogEntry;
+}

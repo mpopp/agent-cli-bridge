@@ -1,4 +1,4 @@
-import type { ExecutionFilter, ExecutionLogEntry, ServerConfig, NetworkConfig, ServerStatus, TunnelConfig, NewTunnelConfig, UpdateTunnelConfig, TunnelProcessState, TunnelStateChangedPayload } from '../types/ipc'
+import type { ExecutionFilter, ExecutionLogEntry, ExecutionHistoryNewEntryPayload, ServerConfig, NetworkConfig, ServerStatus, TunnelConfig, NewTunnelConfig, UpdateTunnelConfig, TunnelProcessState, TunnelStateChangedPayload } from '../types/ipc'
 
 export interface IElectronAPI {
   versions: {
@@ -10,6 +10,7 @@ export interface IElectronAPI {
   executionHistory: {
     getLogs: (filter: ExecutionFilter) => Promise<ExecutionLogEntry[]>
     clearLogs: () => Promise<boolean>
+    onNewEntry: (cb: (payload: ExecutionHistoryNewEntryPayload) => void) => () => void
   }
   connectionConfig: {
     getConfig: () => Promise<ServerConfig>

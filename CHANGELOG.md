@@ -17,3 +17,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Connection Configuration
 - Tunnel Configuration (add, edit, remove, use/activate tunnel configs via SQLite + Electron IPC)
 - Tunnel Execution (auto-start tunnel process on launch, real-time status chip, clean shutdown)
+- Added real-time updates for Execution History
