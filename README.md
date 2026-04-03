@@ -152,7 +152,7 @@ The security measures in Agent CLI Bridge serve different purposes:
 ### What is in place:
 
 - **API key authentication** -- every request must include a valid API key via the `x-api-key` header. Without it, the API rejects all calls. The API key is generated automatically and can be viewed in the UI.
-- **Command blocklist** -- a hardcoded list of dangerous commands is blocked by default (e.g. disk formatting, fork bombs, recursive deletions). This catches the most critical destructive operations that an AI agent might trigger by mistake. The list is not exhaustive. See [`blocklist-check.ts`](src/blocklist-check.ts) in the source code.
+- **Command blocklist** -- a hardcoded list of dangerous commands is blocked by default (e.g. disk formatting, fork bombs, recursive deletions). This catches the most critical destructive operations that an AI agent might trigger by mistake. The list is not exhaustive. See [`blocklist.ts`](src/main/security/blocklist.ts) in the source code.
 - **Command audit log** -- every executed command is logged in the UI with full details, retained for 90 days. Entries older than 90 days are cleaned up on each application start. Use this to review agent activity and catch unintended actions early.
 - **Your user, your permissions** -- the shell runs under the same user account that started the tool. It cannot do anything your user can't do.
 
