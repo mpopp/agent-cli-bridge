@@ -32,7 +32,8 @@ test('real-time log update prepends new entry based on active filter', async ({ 
   }
 
   // Get server config to find the correct port and API key
-  const config = await window.evaluate(() => window.api.connectionConfig.getConfig())
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const config = await window.evaluate(() => (window as any).api.connectionConfig.getConfig())
 
   // Trigger a command execution via the REST API using Playwright's request fixture
   const response = await request.post(`http://127.0.0.1:${config.port}/exec`, {
