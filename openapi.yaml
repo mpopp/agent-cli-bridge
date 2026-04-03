@@ -3,9 +3,16 @@ info:
   title: agent-cli-bridge API
   version: 1.7.0
   description: API for the agent-cli-bridge application
+  license:
+    name: MIT
+    identifier: MIT
+servers:
+  - url: http://localhost:3000
+    description: Embedded local server (port may vary between 3000–5000)
 paths:
   /health:
     get:
+      operationId: getHealth
       summary: Health check endpoint
       description: Returns the health status of the embedded server and the system hostname.
       security:
@@ -15,15 +22,16 @@ paths:
           description: Server is healthy and running.
           content:
             application/json:
+              example:
+                status: "ok"
+                hostname: "user-desktop-123"
               schema:
                 type: object
                 properties:
                   status:
                     type: string
-                    example: "ok"
                   hostname:
                     type: string
-                    example: "user-desktop-123"
         '400':
           description: Bad request.
         '401':
@@ -34,6 +42,7 @@ paths:
           description: Internal server error.
   /exec:
     post:
+      operationId: execCommand
       summary: Execute a shell command
       description: Validates and executes a shell command, returning exit code, stdout, and stderr.
       security:
@@ -43,23 +52,19 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - command
-              properties:
-                command:
-                  type: string
-                  description: The shell command to execute.
-                  example: "echo 'Hello World'"
-                cwd:
-                  type: string
-                  description: Optional working directory for execution.
-                  example: "/home/user"
+              $ref: '#/components/schemas/ExecRequest'
       responses:
         '200':
           description: Command executed successfully (command itself may have non-zero exit code).
           content:
             application/json:
+              example:
+                data:
+                  exitCode: 0
+                  stdout: "Hello World\n"
+                  stderr: ""
+                error: null
+                meta: { }
               schema:
                 type: object
                 properties:
@@ -68,13 +73,10 @@ paths:
                     properties:
                       exitCode:
                         type: integer
-                        example: 0
                       stdout:
                         type: string
-                        example: "Hello World\n"
                       stderr:
                         type: string
-                        example: ""
                   error:
                     type: "null"
                   meta:
@@ -105,6 +107,21 @@ paths:
                 $ref: '#/components/schemas/ErrorEnvelope'
 components:
   schemas:
+    ExecRequest:
+      type: object
+      examples:
+        - data:
+            command: "echo 'Hello World'"
+            cwd: "/home/user"
+      required:
+        - command
+      properties:
+        command:
+          type: string
+          description: The shell command to execute.
+        cwd:
+          type: string
+          description: Optional working directory for execution.
     ErrorEnvelope:
       type: object
       properties:
@@ -115,10 +132,8 @@ components:
           properties:
             code:
               type: string
-              example: "BAD_REQUEST"
             message:
               type: string
-              example: "Missing required field: command"
         meta:
           type: object
   securitySchemes:
