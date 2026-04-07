@@ -5,9 +5,22 @@
   "main": "./out/main/index.js",
   "author": "Matthias Popp",
   "license": "MIT",
+  "build": {
+    "appId": "com.agent-cli-bridge.app",
+    "directories": {
+      "output": "dist"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "files": [
+      "out/**/*"
+    ]
+  },
   "scripts": {
     "dev": "electron-rebuild -f -w better-sqlite3 && electron-vite dev",
     "build": "electron-rebuild -f -w better-sqlite3 && electron-vite build",
+    "dist": "npm run build && CI=false electron-builder --linux AppImage --publish never",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test:unit": "ELECTRON_RUN_AS_NODE=1 ./node_modules/.bin/electron ./node_modules/vitest/vitest.mjs run",
@@ -44,6 +57,7 @@
     "@types/validator": "^13.15.10",
     "@vitejs/plugin-react": "^5.2.0",
     "electron": "^41.1.0",
+    "electron-builder": "^26.8.1",
     "electron-vite": "^5.0.0",
     "eslint": "^10.1.0",
     "jsdom": "^29.0.1",

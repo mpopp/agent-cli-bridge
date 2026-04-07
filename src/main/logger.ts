@@ -1,6 +1,7 @@
 import pino from 'pino'
+import { app } from 'electron'
 
-const isDev = process.env.NODE_ENV !== 'production'
+const isDev = !app.isPackaged
 
 export const logger = pino({
   level: isDev ? 'debug' : 'info',
