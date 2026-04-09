@@ -6,8 +6,7 @@ Agent CLI Bridge is a local Electron/Node.js application that exposes a REST API
 
 This project is being developed using **Specification-Driven Development** -- all features are designed spec-first and built with AI assistance. The OpenAPI specification serves as the single source of truth for the API.
 
-<!-- TODO: Add a demo GIF here once available -->
-<!-- ![Demo](docs/assets/demo.gif) -->
+https://github.com/mpopp/agent-cli-bridge/blob/main/docs/assets/local-access-demo.mp4
 
 ---
 
