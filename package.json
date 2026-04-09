@@ -18,7 +18,7 @@
     ]
   },
   "scripts": {
-    "dev": "electron-rebuild -f -w better-sqlite3 && electron-vite dev",
+    "dev": "electron-rebuild -f -w better-sqlite3 && electron-vite dev -- --no-sandbox",
     "build": "electron-rebuild -f -w better-sqlite3 && electron-vite build",
     "dist": "npm run build && CI=false electron-builder --linux AppImage --publish never",
     "lint": "eslint .",
