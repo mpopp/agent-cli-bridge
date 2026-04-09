@@ -3,16 +3,16 @@ import { BlocklistEntry } from './types';
 export const BLOCKLIST: ReadonlyArray<BlocklistEntry> = Object.freeze([
   // 1. Filesystem destruction
   {
-    pattern: /(?:rm|del|erase|rd)\s+(?:-[^]*[rf][^]*\s+)?(?:\/|[A-Za-z]:[\\/])/i,
+    pattern: /\b(?:rm|del|erase|rd)\s+(?:-[a-zA-Z]*\s+)?(?:\/|[A-Za-z]:[\\/])/i,
     category: 'Filesystem destruction',
     severity: 'critical'
   },
   {
-    pattern: />\s*\/dev\/[a-z0-9]+/i,
+    pattern: />\s*\/dev\/(?!null|stdin|stdout|stderr|fd\/)[a-z0-9]+/i,
     category: 'Filesystem destruction',
     severity: 'critical'
   },
-  
+
   // 2. Fork bombs
   {
     pattern: /:\(\)\s*\{\s*:\|:&\s*\};\s*:/,
